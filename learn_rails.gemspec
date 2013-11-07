@@ -19,8 +19,11 @@ Gem::Specification.new do |spec|
   spec.require_paths = ["lib"]
 
   spec.add_dependency "activesupport", "~> 4.0.1"
+  spec.add_dependency "thor", "~> 0.18.1"
 
   spec.add_development_dependency "bundler", "~> 1.3"
   spec.add_development_dependency "rake"
   spec.add_development_dependency "rspec", "~> 2.14.1"
+  spec.add_development_dependency "cucumber", "~> 1.3.9"
+  spec.add_development_dependency "aruba", "~> 0.5.3"
 end
