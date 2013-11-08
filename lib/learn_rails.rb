@@ -4,14 +4,15 @@ require "active_support/core_ext/string"
 
 module LearnRails
   def self.analyze(*magic)
-    a,b,c = *magic
-    case b
+    association       = magic.join(' ')
+    association_type  = magic[1]
+    case association_type
     when 'belongs_to'
-      LearnRails::Associations.belongs_to(*magic.join(' '))
+      LearnRails::Associations.belongs_to(association)
     when 'has_one'
-      LearnRails::Associations.has_one(*magic.join(' '))
+      LearnRails::Associations.has_one(association)
     when 'has_many'
-      LearnRails::Associations.has_many(*magic.join(' '))
+      LearnRails::Associations.has_many(association)
     else
       error_message
     end
