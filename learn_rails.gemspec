@@ -26,4 +26,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rspec", "~> 2.14.1"
   spec.add_development_dependency "cucumber", "~> 1.3.9"
   spec.add_development_dependency "aruba", "~> 0.5.3"
+  spec.add_development_dependency "debugger", "~> 1.6.2"
 end
