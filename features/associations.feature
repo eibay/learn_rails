@@ -22,6 +22,6 @@ Feature: Associations
     Then the output should contain "# end"
 
   Scenario: non valid rails magic
-   When I run `learn rails random shibberish`
+   When I run `learn rails random gibberish`
    Then the output should contain "No ruby code available."
    Then the output should contain "See http://www.github.com/pjc/learn_rails for list of valid instructions."
