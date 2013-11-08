@@ -6,13 +6,8 @@ module LearnRails
   def self.analyze(*magic)
     association       = magic.join(' ')
     association_type  = magic[1]
-    case association_type
-    when 'belongs_to'
-      LearnRails::Associations.belongs_to(association)
-    when 'has_one'
-      LearnRails::Associations.has_one(association)
-    when 'has_many'
-      LearnRails::Associations.has_many(association)
+    if ['belongs_to', 'has_one', 'has_many'].include? association_type
+      LearnRails::Associations.send(association_type, association)
     else
       error_message
     end
