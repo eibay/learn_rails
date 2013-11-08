@@ -13,10 +13,16 @@ module LearnRails
     when 'has_many'
       LearnRails::Associations.has_many(*magic.join(' '))
     else
-      <<-error.strip_heredoc
-        No ruby code available.
-        See http://www.github.com/pjc/learn_rails for list of valid instructions.
-      error
+      error_message
     end
+  end
+
+  private
+
+  def self.error_message
+    <<-error.strip_heredoc
+      No ruby code available.
+      See http://www.github.com/pjc/learn_rails for list of valid instructions.
+    error
   end
 end
