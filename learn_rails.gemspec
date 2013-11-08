@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = LearnRails::VERSION
   spec.authors       = ["Peter-Jan Celis"]
   spec.email         = ["pj@celis.org"]
-  spec.description   = spec.summary
+  spec.description   = %q{Gem learn_rails shows you the ruby code behind rails magic.}
   spec.summary       = %q{Gem learn_rails shows you the ruby code behind rails magic.}
   spec.homepage      = "http://github.com/pjc/learn_rails"
   spec.license       = "MIT"
