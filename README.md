@@ -1,3 +1,5 @@
+[![Code Climate](https://codeclimate.com/github/pjc/learn_rails.png)](https://codeclimate.com/github/pjc/learn_rails)
+
 # LearnRails
 
 TODO: Write a gem description
