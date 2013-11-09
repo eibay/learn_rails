@@ -1,6 +1,4 @@
-[![Code Climate](https://codeclimate.com/github/pjc/learn_rails.png)](https://codeclimate.com/github/pjc/learn_rails)
-
-# LearnRails
+# Learn Rails [![Build Status](https://secure.travis-ci.org/pjc/learn_rails.png)](https://travis-ci.org/pjc/learn_rails) [![Code Climate](https://codeclimate.com/github/pjc/learn_rails.png)](https://codeclimate.com/github/pjc/learn_rails)
 
 TODO: Write a gem description
 
