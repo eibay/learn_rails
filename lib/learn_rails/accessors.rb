@@ -4,7 +4,7 @@ module LearnRails
       <<-code.strip_heredoc
         #{initialize_method_for attribute_from accessor}
 
-        #{getter_method_for attribute_from accessor }
+        #{getter_method_for attribute_from accessor}
       code
     end
 
