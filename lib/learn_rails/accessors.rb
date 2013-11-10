@@ -1,50 +1,59 @@
 module LearnRails
   class Accessors
     def self.reader(accessor)
-      attribute = get_attribute_from accessor
       <<-code.strip_heredoc
-        # def initialize(#{attribute})
-        #  @#{attribute} = #{attribute}
-        # end
+        #{initialize_method_for attribute_from accessor}
 
-        # def #{attribute}
-        #  @#{attribute}
-        # end
+        #{getter_method_for attribute_from accessor }
       code
     end
 
     def self.writer(accessor)
-      attribute = get_attribute_from accessor
       <<-code.strip_heredoc
-        # def initialize(#{attribute})
-        #  @#{attribute} = #{attribute}
-        # end
+        #{initialize_method_for attribute_from accessor}
 
-        # def #{attribute}=(value)
-        #  @#{attribute} = value
-        # end
+        #{setter_method_for attribute_from accessor}
       code
     end
 
     def self.accessor(accessor)
-      attribute = get_attribute_from accessor
+      <<-code.strip_heredoc
+        #{initialize_method_for attribute_from accessor}
+
+        #{getter_method_for attribute_from accessor}
+
+        #{setter_method_for attribute_from accessor}
+      code
+    end
+
+    private
+
+    def self.attribute_from accessor
+      attribute = accessor[1].delete ':'
+    end
+
+    def self.initialize_method_for attribute
       <<-code.strip_heredoc
         # def initialize(#{attribute})
         #  @#{attribute} = #{attribute}
         # end
+      code
+    end
 
+    def self.getter_method_for attribute
+      <<-code.strip_heredoc
         # def #{attribute}
         #  @#{attribute}
-        # end
-
-        # def #{attribute}=(value)
-        #  @#{attribute} = value
         # end
       code
     end
 
-    def self.get_attribute_from accessor
-      attribute = accessor[1].delete ':'
+    def self.setter_method_for attribute
+      <<-code.strip_heredoc
+        # def #{attribute}=(value)
+        #  @#{attribute} = value
+        # end
+      code
     end
   end
 end
