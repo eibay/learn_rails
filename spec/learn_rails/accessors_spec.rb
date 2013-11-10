@@ -3,15 +3,15 @@ require 'learn_rails'
 describe LearnRails::Accessors do
   context "should return the right commented out ruby code for accessor:" do
     it "attr_reader :name" do
-      LearnRails::Accessors.reader("attr_reader :name").should eql attr_reader_heredoc
+      LearnRails::Accessors.reader(%w(attr_reader :name)).should eql attr_reader_heredoc
     end
 
     it "attr_writer :name" do
-      LearnRails::Accessors.writer("attr_writer :name").should eql attr_writer_heredoc
+      LearnRails::Accessors.writer(%w(attr_writer :name)).should eql attr_writer_heredoc
     end
 
     it "attr_accessor :name" do
-      LearnRails::Accessors.accessor("attr_accessor :name").should eql attr_accessor_heredoc
+      LearnRails::Accessors.accessor(%w(attr_accessor :name)).should eql attr_accessor_heredoc
     end
   end
 

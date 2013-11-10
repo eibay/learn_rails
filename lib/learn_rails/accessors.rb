@@ -1,7 +1,7 @@
 module LearnRails
   class Accessors
     def self.reader(accessor)
-      attribute = accessor.split(' ')[1].delete ':'
+      attribute = accessor[1].delete ':'
       <<-code.strip_heredoc
         # def initialize(#{attribute})
         #  @#{attribute} = #{attribute}
@@ -14,20 +14,20 @@ module LearnRails
     end
 
     def self.writer(accessor)
-      attribute = accessor.split(' ')[1].delete ':'
+      attribute = accessor[1].delete ':'
       <<-code.strip_heredoc
         # def initialize(#{attribute})
         #  @#{attribute} = #{attribute}
         # end
 
-        # def name=(value)
+        # def #{attribute}=(value)
         #  @#{attribute} = value
         # end
       code
     end
 
     def self.accessor(accessor)
-      attribute = accessor.split(' ')[1].delete ':'
+      attribute = accessor[1].delete ':'
       <<-code.strip_heredoc
         # def initialize(#{attribute})
         #  @#{attribute} = #{attribute}
@@ -37,7 +37,7 @@ module LearnRails
         #  @#{attribute}
         # end
 
-        # def name=(value)
+        # def #{attribute}=(value)
         #  @#{attribute} = value
         # end
       code
