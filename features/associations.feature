@@ -16,9 +16,9 @@ Feature: Associations
     Then the output should contain "# end"
 
   Scenario: has_many association
-    When I run `learn rails user has_many :tasks`
-    Then the output should contain "# def tasks"
-    Then the output should contain "#   Task.where(user_id: self.id)"
+    When I run `learn rails user has_many :car_parts`
+    Then the output should contain "# def car_parts"
+    Then the output should contain "#   CarPart.where(user_id: self.id)"
     Then the output should contain "# end"
 
   Scenario: non valid rails magic
