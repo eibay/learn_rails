@@ -1,7 +1,7 @@
 module LearnRails
   class Associations
     def self.belongs_to(association)
-      parent_name   = association.split[2].delete ':'
+      parent_name   = association[2].delete ':'
       parent_model  = parent_name.camelize
       <<-code.strip_heredoc
         # def #{parent_name}
@@ -11,8 +11,8 @@ module LearnRails
     end
 
     def self.has_many(association)
-      parent_name   = association.split[0].downcase
-      children_name = association.split[2].delete(':').downcase
+      parent_name   = association[0].downcase
+      children_name = association[2].delete(':').downcase
       child_model   = children_name.singularize.camelize
       <<-code.strip_heredoc
         # def #{children_name}
@@ -22,8 +22,8 @@ module LearnRails
     end
 
     def self.has_one(association)
-      parent_name = association.split[0].downcase
-      child_name  = association.split[2].delete(':').downcase
+      parent_name = association[0].downcase
+      child_name  = association[2].delete(':').downcase
       child_model = child_name.camelize
       <<-code.strip_heredoc
         # def #{child_name}
