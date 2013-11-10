@@ -3,15 +3,15 @@ require 'learn_rails'
 describe LearnRails::Associations do
   context "should return should return the right commented out ruby code for association:" do
     it "Task belongs_to :user" do
-      LearnRails::Associations.belongs_to("Task belongs_to :user").should eql belongs_to_heredoc
+      LearnRails::Associations.belongs_to(%w(Task belongs_to :user)).should eql belongs_to_heredoc
     end
 
     it "User has_one :task" do
-      LearnRails::Associations.has_one("User has_one :task").should eql has_one_heredoc
+      LearnRails::Associations.has_one(%w(User has_one :task)).should eql has_one_heredoc
     end
 
     it "User has_many :tasks" do
-      LearnRails::Associations.has_many("User has_many :tasks").should eql has_many_heredoc
+      LearnRails::Associations.has_many(%w(User has_many :tasks)).should eql has_many_heredoc
     end
   end
 
