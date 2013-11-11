@@ -18,7 +18,7 @@ describe LearnRails::Associations do
   private
 
   def belongs_to_heredoc
-    <<-code.strip_heredoc
+    <<-code.gsub(/^\s+/, '')
       # def user
       #   User.find_by_id(self.user_id)
       # end
@@ -26,7 +26,7 @@ describe LearnRails::Associations do
   end
 
   def has_one_heredoc
-    <<-code.strip_heredoc
+    <<-code.gsub(/^\s+/, '')
       # def task
       #   Task.find_by_user_id(self.id)
       # end
@@ -34,7 +34,7 @@ describe LearnRails::Associations do
   end
 
   def has_many_heredoc
-    <<-code.strip_heredoc
+    <<-code.gsub(/^\s+/, '')
       # def tasks
       #   Task.where(user_id: self.id)
       # end
