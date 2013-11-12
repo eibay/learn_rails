@@ -6,8 +6,8 @@ require "active_support/core_ext/string"
 module LearnRails
   def self.analyze(*magic)
     if accessor? magic
-      accessor_type = magic[0].split('_')[1]
-      LearnRails::Accessors.send(accessor_type, magic)
+      # accessor_type = magic[0].split('_')[1]
+      LearnRails::Accessors.code_for magic
     elsif association? magic
       association_type  = magic[1]
       LearnRails::Associations.send(association_type, magic)

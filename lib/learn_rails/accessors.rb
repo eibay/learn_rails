@@ -1,6 +1,6 @@
 module LearnRails
   class Accessors
-    def self.reader(accessor)
+    def self.code_for(accessor)
       attributes = attributes_from accessor
 
       code = <<-code.gsub(/^\s+/, '')
@@ -8,36 +8,8 @@ module LearnRails
       code
 
       attributes.each do |attribute|
-        code << getter_method_for(attribute)
-      end
-
-      code
-    end
-
-    def self.writer(accessor)
-      attributes = attributes_from accessor
-
-      code = <<-code.gsub(/^\s+/, '')
-        #{initialize_method_for attributes}
-      code
-
-      attributes.each do |attribute|
-        code << setter_method_for(attribute)
-      end
-
-      code
-    end
-
-    def self.accessor(accessor)
-      attributes = attributes_from accessor
-
-      code = <<-code.gsub(/^\s+/, '')
-        #{initialize_method_for attributes}
-      code
-
-      attributes.each do |attribute|
-        code << getter_method_for(attribute)
-        code << setter_method_for(attribute)
+        code << getter_method_for(attribute) if ['reader', 'accessor'].include? accessor_type(accessor)
+        code << setter_method_for(attribute) if ['writer', 'accessor'].include? accessor_type(accessor)
       end
 
       code
@@ -45,9 +17,12 @@ module LearnRails
 
     private
 
+    def self.accessor_type accessor
+      accessor[0].split('_')[1]
+    end
+
     def self.attributes_from accessor
-      accessor.shift
-      accessor.map { |attr| attr.delete(',').delete(':') }
+      accessor.drop(1).map { |attr| attr.delete(',').delete(':') }
     end
 
     def self.initialize_method_for attributes
