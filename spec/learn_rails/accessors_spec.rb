@@ -13,6 +13,18 @@ describe LearnRails::Accessors do
     it "attr_accessor :name" do
       LearnRails::Accessors.accessor(%w(attr_accessor :name)).should eql attr_accessor_heredoc
     end
+
+    it "attr_reader :name, :another" do
+      LearnRails::Accessors.reader(%w(attr_reader :name, :another)).should eql attr_reader_two_attributes_heredoc
+    end
+
+    it "attr_writer :name, :another" do
+      LearnRails::Accessors.writer(%w(attr_writer :name, :another)).should eql attr_writer_two_attributes_heredoc
+    end
+
+    it "attr_accessor :name, :another" do
+      LearnRails::Accessors.accessor(%w(attr_accessor :name, :another)).should eql attr_accessor_two_attributes_heredoc
+    end
   end
 
   private
@@ -53,6 +65,65 @@ describe LearnRails::Accessors do
       #
       # def name=(value)
       #  @name = value
+      # end
+    code
+  end
+
+  def attr_reader_two_attributes_heredoc
+    <<-code.gsub(/^\s+/, '')
+      # def initialize(name, another)
+      #  @name = name
+      #  @another = another
+      # end
+      #
+      # def name
+      #  @name
+      # end
+      #
+      # def another
+      #  @another
+      # end
+    code
+  end
+
+  def attr_writer_two_attributes_heredoc
+    <<-code.gsub(/^\s+/, '')
+      # def initialize(name, another)
+      #  @name = name
+      #  @another = another
+      # end
+      #
+      # def name=(value)
+      #  @name = value
+      # end
+      #
+      # def another=(value)
+      #  @another = value
+      # end
+    code
+  end
+
+  def attr_accessor_two_attributes_heredoc
+    <<-code.gsub(/^\s+/, '')
+      # def initialize(name, another)
+      #  @name = name
+      #  @another = another
+      # end
+      #
+      # def name
+      #  @name
+      # end
+      #
+      # def name=(value)
+      #  @name = value
+      # end
+      #
+      # def another
+      #  @another
+      # end
+      #
+      # def another=(value)
+      #  @another = value
       # end
     code
   end
