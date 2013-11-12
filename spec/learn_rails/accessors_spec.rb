@@ -27,6 +27,16 @@ describe LearnRails::Accessors do
     end
   end
 
+  context "should not return commas in the code" do
+  it "when it is a comma right after the last attribute" do
+      LearnRails::Accessors.code_for(%w(attr_accessor :name,)).should eql attr_accessor_code
+    end
+
+    it "when it is a comma seperated by a space" do
+      LearnRails::Accessors.code_for(%w(attr_accessor :name ,)).should  eql attr_accessor_code
+    end
+  end
+
   private
 
   def attr_reader_code

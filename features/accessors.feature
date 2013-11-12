@@ -77,3 +77,12 @@ Feature: Accessors
     Then the output should contain "# def another=(value)"
     Then the output should contain "#  @another = value"
     Then the output should contain "# end"
+
+  Scenario: valid statement but with comma right after
+    When I run `learn rails attr_reader :whatever,`
+    Then the output should not contain ","
+
+  Scenario: valid statement but with standalone comma after it
+    When I run `learn rails attr_reader :whatever ,`
+    Then the output should not contain ","
+    Then the output should not contain "@ "
