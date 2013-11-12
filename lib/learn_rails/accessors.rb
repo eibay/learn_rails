@@ -22,7 +22,7 @@ module LearnRails
     end
 
     def self.attributes_from accessor
-      accessor.drop(1).map { |attr| attr.delete(',').delete(':') }
+      accessor.drop(1).map { |attr| attr.delete(',').delete(':') }.delete_if(&:empty?)
     end
 
     def self.initialize_method_for attributes
