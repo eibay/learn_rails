@@ -1,47 +1,66 @@
 module LearnRails
   class Accessors
     def self.reader(accessor)
-      <<-code.gsub(/^\s+/, '')
-        #{initialize_method_for attribute_from accessor}
-        #
-        #{getter_method_for attribute_from accessor}
+      attributes = attributes_from accessor
+
+      code = <<-code.gsub(/^\s+/, '')
+        #{initialize_method_for attributes}
+      code
+
+      attributes.each do |attribute|
+        code << getter_method_for(attribute)
+      end
+
       code
     end
 
     def self.writer(accessor)
-      <<-code.gsub(/^\s+/, '')
-        #{initialize_method_for attribute_from accessor}
-        #
-        #{setter_method_for attribute_from accessor}
+      attributes = attributes_from accessor
+
+      code = <<-code.gsub(/^\s+/, '')
+        #{initialize_method_for attributes}
+      code
+
+      attributes.each do |attribute|
+        code << setter_method_for(attribute)
+      end
+
       code
     end
 
     def self.accessor(accessor)
-      <<-code.gsub(/^\s+/, '')
-        #{initialize_method_for attribute_from accessor}
-        #
-        #{getter_method_for attribute_from accessor}
-        #
-        #{setter_method_for attribute_from accessor}
+      attributes = attributes_from accessor
+
+      code = <<-code.gsub(/^\s+/, '')
+        #{initialize_method_for attributes}
+      code
+
+      attributes.each do |attribute|
+        code << getter_method_for(attribute)
+        code << setter_method_for(attribute)
+      end
+
       code
     end
 
     private
 
-    def self.attribute_from accessor
-      attribute = accessor[1].delete ':'
+    def self.attributes_from accessor
+      accessor.shift
+      accessor.map { |attr| attr.delete(',').delete(':') }
     end
 
-    def self.initialize_method_for attribute
-      <<-code.gsub(/^\s+/, '').chomp
-        # def initialize(#{attribute})
-        #  @#{attribute} = #{attribute}
+    def self.initialize_method_for attributes
+      <<-code.gsub(/^\s+/, '')
+        # def initialize(#{attributes.join ', '})
+        #{attributes.map { |attr| "#  @#{attr} = #{attr}" }.join("\n")}
         # end
       code
     end
 
     def self.getter_method_for attribute
-      <<-code.gsub(/^\s+/, '').chomp
+      <<-code.gsub(/^\s+/, '')
+        #
         # def #{attribute}
         #  @#{attribute}
         # end
@@ -49,7 +68,8 @@ module LearnRails
     end
 
     def self.setter_method_for attribute
-      <<-code.gsub(/^\s+/, '').chomp
+      <<-code.gsub(/^\s+/, '')
+        #
         # def #{attribute}=(value)
         #  @#{attribute} = value
         # end
