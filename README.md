@@ -1,4 +1,11 @@
-# Learn Rails [![Build Status](https://secure.travis-ci.org/pjc/learn_rails.png)](https://travis-ci.org/pjc/learn_rails) [![Code Climate](https://codeclimate.com/github/pjc/learn_rails.png)](https://codeclimate.com/github/pjc/learn_rails) [![Dependency Status](https://gemnasium.com/pjc/learn_rails.png)](https://gemnasium.com/pjc/learn_rails)
+# Learn Rails
+[![Build Status](https://secure.travis-ci.org/pjc/learn_rails.png?branch=master)][travis]
+[![Code Climate](https://codeclimate.com/github/pjc/learn_rails.png)][codeclimate]
+[![Dependency Status](https://gemnasium.com/pjc/learn_rails.png)][gemnasium]
+
+[travis]: https://travis-ci.org/pjc/learn_rails
+[codeclimate]: https://codeclimate.com/github/pjc/learn_rails
+[gemnasium]: https://gemnasium.com/pjc/learn_rails
 
 TODO: Write a gem description
 
