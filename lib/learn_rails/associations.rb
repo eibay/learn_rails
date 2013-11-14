@@ -6,7 +6,7 @@ module LearnRails
 
       <<-code.gsub(/^\s+/, '')
         # def #{params[:associate]}
-        #   #{parent_model}.find_by_id(self.#{params[:associate]}_id)
+        #   #{associate_model}.find_by_id(self.#{params[:associate]}_id)
         # end
       code
     end
