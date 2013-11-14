@@ -61,6 +61,28 @@ Feature: Associations
     Then the output should contain "#   VoodooPop.create!(attributes)"
     Then the output should contain "# end"
 
+  Scenario: has_one association with :class_name option using the old hash syntax
+    When I run `learn rails user has_one :task, :class_name => :to_do`
+    Then the output should contain "#   @task ||= ToDo.find_by_user_id(self.id)"
+    Then the output should contain "#   ToDo.new(attributes)"
+    Then the output should contain "#   ToDo.create(attributes)"
+    Then the output should contain "#   ToDo.create!(attributes)"
+    Then the output should not contain "#   @task ||= Task.find_by_user_id(self.id)"
+    Then the output should not contain "#   Task.new(attributes)"
+    Then the output should not contain "#   Task.create(attributes)"
+    Then the output should not contain "#   Task.create!(attributes)"
+
+  Scenario: has_one association with :class_name option using the new hash syntax
+    When I run `learn rails user has_one :task, class_name: :to_do`
+    Then the output should contain "#   @task ||= ToDo.find_by_user_id(self.id)"
+    Then the output should contain "#   ToDo.new(attributes)"
+    Then the output should contain "#   ToDo.create(attributes)"
+    Then the output should contain "#   ToDo.create!(attributes)"
+    Then the output should not contain "#   @task ||= Task.find_by_user_id(self.id)"
+    Then the output should not contain "#   Task.new(attributes)"
+    Then the output should not contain "#   Task.create(attributes)"
+    Then the output should not contain "#   Task.create!(attributes)"
+
   Scenario: has_many association
     When I run `learn rails user has_many :tasks`
     Then the output should contain "# def tasks"

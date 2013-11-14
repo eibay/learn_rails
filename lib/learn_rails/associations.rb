@@ -23,8 +23,8 @@ module LearnRails
 
     def self.has_one(association)
       parent_name = association[0].downcase
-      child_name  = association[2].delete(':').downcase
-      child_model = child_name.camelize
+      child_name  = association[2].delete(':').delete(',').downcase
+      child_model = child_model(association)
       <<-code.gsub(/^\s+/, '')
         # def #{child_name}(force_reload = false)
         #   @#{child_name} = nil if force_reload
@@ -51,6 +51,21 @@ module LearnRails
         #   #{child_model}.create!(attributes)
         # end
       code
+    end
+
+    private
+
+    def self.child_model association
+      model_element = case association[3]
+      when ":class_name"
+        association[5]
+      when "class_name:"
+        association[4]
+      else
+        association[2]
+      end
+
+      model_element.delete(':').delete(',').downcase.camelize
     end
   end
 end
