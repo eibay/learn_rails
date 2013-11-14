@@ -26,8 +26,9 @@ module LearnRails
       child_name  = association[2].delete(':').downcase
       child_model = child_name.camelize
       <<-code.gsub(/^\s+/, '')
-        # def #{child_name}
-        #   #{child_model}.find_by_#{parent_name}_id(self.id)
+        # def #{child_name}(force_reload = false)
+        #   @#{child_name} = nil if force_reload
+        #   @#{child_name} ||= #{child_model}.find_by_#{parent_name}_id(self.id)
         # end
         #
         # def #{child_name}=(#{child_name})

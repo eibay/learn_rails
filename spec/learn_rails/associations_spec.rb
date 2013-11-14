@@ -27,8 +27,9 @@ describe LearnRails::Associations do
 
   def has_one_code
     <<-code.gsub(/^\s+/, '')
-      # def task
-      #   Task.find_by_user_id(self.id)
+      # def task(force_reload = false)
+      #   @task = nil if force_reload
+      #   @task ||= Task.find_by_user_id(self.id)
       # end
       #
       # def task=(task)

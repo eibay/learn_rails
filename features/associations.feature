@@ -12,7 +12,8 @@ Feature: Associations
   Scenario: has_one association
     When I run `learn rails user has_one :task`
     Then the output should contain "# def task"
-    Then the output should contain "#   Task.find_by_user_id(self.id)"
+    Then the output should contain "#   @task = nil if force_reload"
+    Then the output should contain "#   @task ||= Task.find_by_user_id(self.id)"
     Then the output should contain "# end"
     Then the output should contain "# def task=(task)"
     Then the output should contain "#   task.user_id = self.id"
