@@ -22,50 +22,49 @@ module LearnRails
     end
 
     def self.has_one(association)
-      parent_name = association[0].downcase
-      child_name  = association[2].delete(':').delete(',').downcase
-      child_model = child_model(association)
+      params = params association
+      associate_model = (params[:class_name] || params[:associate]).camelize
+
       <<-code.gsub(/^\s+/, '')
-        # def #{child_name}(force_reload = false)
-        #   @#{child_name} = nil if force_reload
-        #   @#{child_name} ||= #{child_model}.find_by_#{parent_name}_id(self.id)
+        # def #{params[:associate]}(force_reload = false)
+        #   @#{params[:associate]} = nil if force_reload
+        #   @#{params[:associate]} ||= #{associate_model}.find_by_#{params[:model]}_id(self.id)
         # end
         #
-        # def #{child_name}=(#{child_name})
-        #   #{child_name}.#{parent_name}_id = self.id
-        #   #{child_name}.save
+        # def #{params[:associate]}=(#{params[:associate]})
+        #   #{params[:associate]}.#{params[:model]}_id = self.id
+        #   #{params[:associate]}.save
         # end
         #
-        # def build_#{child_name}(attributes = {})
-        #   attributes[:#{parent_name}_id] = self.id
-        #   #{child_model}.new(attributes)
+        # def build_#{params[:associate]}(attributes = {})
+        #   attributes[:#{params[:model]}_id] = self.id
+        #   #{associate_model}.new(attributes)
         # end
         #
-        # def create_#{child_name}(attributes = {})
-        #   attributes[:#{parent_name}_id] = self.id
-        #   #{child_model}.create(attributes)
+        # def create_#{params[:associate]}(attributes = {})
+        #   attributes[:#{params[:model]}_id] = self.id
+        #   #{associate_model}.create(attributes)
         # end
         #
-        # def create_#{child_name}!(attributes = {})
-        #   attributes[:#{parent_name}_id] = self.id
-        #   #{child_model}.create!(attributes)
+        # def create_#{params[:associate]}!(attributes = {})
+        #   attributes[:#{params[:model]}_id] = self.id
+        #   #{associate_model}.create!(attributes)
         # end
       code
     end
 
     private
 
-    def self.child_model association
-      model_element = case association[3]
-      when ":class_name"
-        association[5]
-      when "class_name:"
-        association[4]
-      else
-        association[2]
-      end
+    def self.params association
+      association.delete "=>"
+      association.map! { |e| e.delete(':').delete(',').downcase }
 
-      model_element.delete(':').delete(',').camelize
+      params = {}
+      params[:model]        = association.shift
+      params[:association]  = association.shift
+      params[:associate]    = association.shift
+
+      params.merge!(Hash[*association]).symbolize_keys!
     end
   end
 end
