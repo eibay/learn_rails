@@ -1,7 +1,13 @@
 module LearnRails
   class Associations
-    def self.belongs_to(association)
+    def self.code_for(association)
       params = params association
+      self.send(params[:association], params)
+    end
+
+    private
+
+    def self.belongs_to(params)
       associate_model  = params[:associate].camelize
 
       <<-code.gsub(/^\s+/, '')
@@ -11,8 +17,7 @@ module LearnRails
       code
     end
 
-    def self.has_many(association)
-      params = params association
+    def self.has_many(params)
       associate_model = params[:associate].singularize.camelize
 
       <<-code.gsub(/^\s+/, '')
@@ -22,8 +27,7 @@ module LearnRails
       code
     end
 
-    def self.has_one(association)
-      params = params association
+    def self.has_one(params)
       associate_model = (params[:class_name] || params[:associate]).camelize
 
       <<-code.gsub(/^\s+/, '')
@@ -54,18 +58,22 @@ module LearnRails
       code
     end
 
-    private
-
     def self.params association
-      association.delete "=>"
-      association.map! { |e| e.delete(':').delete(',').downcase }
+      association = clean_up association
 
       params = {}
       params[:model]        = association.shift
       params[:association]  = association.shift
       params[:associate]    = association.shift
 
-      params.merge!(Hash[*association]).symbolize_keys!
+      options_specified = Hash[*association]
+
+      params.merge!(options_specified).symbolize_keys!
+    end
+
+    def self.clean_up association
+      association.delete "=>"
+      association.map! { |e| e.delete(':').delete(',').downcase }
     end
   end
 end

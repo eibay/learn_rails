@@ -3,21 +3,21 @@ require 'learn_rails'
 describe LearnRails::Associations do
   context "should return should return the right commented out ruby code for association:" do
     it "Task belongs_to :user" do
-      LearnRails::Associations.belongs_to(%w(Task belongs_to :user)).should eql belongs_to_code
+      LearnRails::Associations.code_for(%w(Task belongs_to :user)).should eql belongs_to_code
     end
 
     it "User has_one :task" do
-      LearnRails::Associations.has_one(%w(User has_one :task)).should eql has_one_code
+      LearnRails::Associations.code_for(%w(User has_one :task)).should eql has_one_code
     end
 
     it "User has_one :task, :class_name => :to_do" do
       [%w(User has_one :task, :class_name => :to_do), %w(User has_one :task, class_name: :to_do)].each do |association|
-        LearnRails::Associations.has_one(association).should eql has_one_with_class_name_code
+        LearnRails::Associations.code_for(association).should eql has_one_with_class_name_code
       end
     end
 
     it "User has_many :tasks" do
-      LearnRails::Associations.has_many(%w(User has_many :tasks)).should eql has_many_code
+      LearnRails::Associations.code_for(%w(User has_many :tasks)).should eql has_many_code
     end
   end
 
