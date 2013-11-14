@@ -1,22 +1,23 @@
 module LearnRails
   class Associations
     def self.belongs_to(association)
-      parent_name   = association[2].delete ':'
-      parent_model  = parent_name.camelize
+      params = params association
+      associate_model  = params[:associate].camelize
+
       <<-code.gsub(/^\s+/, '')
-        # def #{parent_name}
-        #   #{parent_model}.find_by_id(self.#{parent_name}_id)
+        # def #{params[:associate]}
+        #   #{parent_model}.find_by_id(self.#{params[:associate]}_id)
         # end
       code
     end
 
     def self.has_many(association)
-      parent_name   = association[0].downcase
-      children_name = association[2].delete(':').downcase
-      child_model   = children_name.singularize.camelize
+      params = params association
+      associate_model = params[:associate].singularize.camelize
+
       <<-code.gsub(/^\s+/, '')
-        # def #{children_name}
-        #   #{child_model}.where(#{parent_name}_id: self.id)
+        # def #{params[:associate]}
+        #   #{associate_model}.where(#{params[:model]}_id: self.id)
         # end
       code
     end
