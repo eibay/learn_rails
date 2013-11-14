@@ -36,7 +36,7 @@ module LearnRails
         #   #{child_name}.save
         # end
         #
-        # def build_task(attributes = {})
+        # def build_#{child_name}(attributes = {})
         #   attributes[:#{parent_name}_id] = self.id
         #   #{child_model}.new(attributes)
         # end

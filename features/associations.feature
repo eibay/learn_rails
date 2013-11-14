@@ -17,7 +17,7 @@ Feature: Associations
 
   Scenario: has_one association
     When I run `learn rails user has_one :task`
-    Then the output should contain "# def task"
+    Then the output should contain "# def task(force_reload = false)"
     Then the output should contain "#   @task = nil if force_reload"
     Then the output should contain "#   @task ||= Task.find_by_user_id(self.id)"
     Then the output should contain "# end"
@@ -40,8 +40,25 @@ Feature: Associations
 
   Scenario: has_one association with multi-word model
     When I run `learn rails user has_one :voodoo_pop`
-    Then the output should contain "# def voodoo_pop"
-    Then the output should contain "#   VoodooPop.find_by_user_id(self.id)"
+    Then the output should contain "# def voodoo_pop(force_reload = false)"
+    Then the output should contain "#   @voodoo_pop = nil if force_reload"
+    Then the output should contain "#   @voodoo_pop ||= VoodooPop.find_by_user_id(self.id)"
+    Then the output should contain "# end"
+    Then the output should contain "# def voodoo_pop=(voodoo_pop)"
+    Then the output should contain "#   voodoo_pop.user_id = self.id"
+    Then the output should contain "#   voodoo_pop.save"
+    Then the output should contain "# end"
+    Then the output should contain "# def build_voodoo_pop(attributes = {})"
+    Then the output should contain "#   attributes[:user_id] = self.id"
+    Then the output should contain "#   VoodooPop.new(attributes)"
+    Then the output should contain "# end"
+    Then the output should contain "# def create_voodoo_pop(attributes = {})"
+    Then the output should contain "#   attributes[:user_id] = self.id"
+    Then the output should contain "#   VoodooPop.create(attributes)"
+    Then the output should contain "# end"
+    Then the output should contain "# def create_voodoo_pop!(attributes = {})"
+    Then the output should contain "#   attributes[:user_id] = id"
+    Then the output should contain "#   VoodooPop.create!(attributes)"
     Then the output should contain "# end"
 
   Scenario: has_many association
