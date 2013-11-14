@@ -29,18 +29,22 @@ module LearnRails
         # def #{child_name}
         #   #{child_model}.find_by_#{parent_name}_id(self.id)
         # end
+        #
         # def #{child_name}=(#{child_name})
         #   #{child_name}.#{parent_name}_id = self.id
         #   #{child_name}.save
         # end
+        #
         # def build_task(attributes = {})
         #   attributes[:#{parent_name}_id] = self.id
         #   #{child_model}.new(attributes)
         # end
+        #
         # def create_#{child_name}(attributes = {})
         #   attributes[:#{parent_name}_id] = self.id
         #   #{child_model}.create(attributes)
         # end
+        #
         # def create_#{child_name}!(attributes = {})
         #   attributes[:#{parent_name}_id] = id
         #   #{child_model}.create!(attributes)

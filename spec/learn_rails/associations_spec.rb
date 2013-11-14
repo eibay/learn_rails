@@ -30,18 +30,22 @@ describe LearnRails::Associations do
       # def task
       #   Task.find_by_user_id(self.id)
       # end
+      #
       # def task=(task)
       #   task.user_id = self.id
       #   task.save
       # end
+      #
       # def build_task(attributes = {})
       #   attributes[:user_id] = self.id
       #   Task.new(attributes)
       # end
+      #
       # def create_task(attributes = {})
       #   attributes[:user_id] = self.id
       #   Task.create(attributes)
       # end
+      #
       # def create_task!(attributes = {})
       #   attributes[:user_id] = id
       #   Task.create!(attributes)
