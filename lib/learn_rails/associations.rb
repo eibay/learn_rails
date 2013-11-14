@@ -47,7 +47,7 @@ module LearnRails
         # end
         #
         # def create_#{child_name}!(attributes = {})
-        #   attributes[:#{parent_name}_id] = id
+        #   attributes[:#{parent_name}_id] = self.id
         #   #{child_model}.create!(attributes)
         # end
       code

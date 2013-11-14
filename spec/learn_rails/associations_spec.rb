@@ -48,7 +48,7 @@ describe LearnRails::Associations do
       # end
       #
       # def create_task!(attributes = {})
-      #   attributes[:user_id] = id
+      #   attributes[:user_id] = self.id
       #   Task.create!(attributes)
       # end
     code

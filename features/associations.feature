@@ -34,7 +34,7 @@ Feature: Associations
     Then the output should contain "#   Task.create(attributes)"
     Then the output should contain "# end"
     Then the output should contain "# def create_task!(attributes = {})"
-    Then the output should contain "#   attributes[:user_id] = id"
+    Then the output should contain "#   attributes[:user_id] = self.id"
     Then the output should contain "#   Task.create!(attributes)"
     Then the output should contain "# end"
 
@@ -57,7 +57,7 @@ Feature: Associations
     Then the output should contain "#   VoodooPop.create(attributes)"
     Then the output should contain "# end"
     Then the output should contain "# def create_voodoo_pop!(attributes = {})"
-    Then the output should contain "#   attributes[:user_id] = id"
+    Then the output should contain "#   attributes[:user_id] = self.id"
     Then the output should contain "#   VoodooPop.create!(attributes)"
     Then the output should contain "# end"
 
