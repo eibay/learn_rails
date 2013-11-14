@@ -65,7 +65,7 @@ module LearnRails
         association[2]
       end
 
-      model_element.delete(':').delete(',').downcase.camelize
+      model_element.delete(':').delete(',').camelize
     end
   end
 end
