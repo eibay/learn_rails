@@ -14,6 +14,22 @@ Feature: Associations
     Then the output should contain "# def task"
     Then the output should contain "#   Task.find_by_user_id(self.id)"
     Then the output should contain "# end"
+    Then the output should contain "# def task=(task)"
+    Then the output should contain "#   task.user_id = self.id"
+    Then the output should contain "#   task.save"
+    Then the output should contain "# end"
+    Then the output should contain "# def build_task(attributes = {})"
+    Then the output should contain "#   attributes[:user_id] = self.id"
+    Then the output should contain "#   Task.new(attributes)"
+    Then the output should contain "# end"
+    Then the output should contain "# def create_task(attributes = {})"
+    Then the output should contain "#   attributes[:user_id] = self.id"
+    Then the output should contain "#   Task.create(attributes)"
+    Then the output should contain "# end"
+    Then the output should contain "# def create_task!(attributes = {})"
+    Then the output should contain "#   attributes[:user_id] = id"
+    Then the output should contain "#   Task.create!(attributes)"
+    Then the output should contain "# end"
 
   Scenario: has_many association
     When I run `learn rails user has_many :tasks`
