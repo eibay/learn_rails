@@ -8,8 +8,7 @@ module LearnRails
     if accessor? magic
       LearnRails::Accessors.code_for magic
     elsif association? magic
-      association_type  = magic[1]
-      LearnRails::Associations.send(association_type, magic)
+      LearnRails::Associations.code_for magic
     else
       error_message
     end
@@ -28,7 +27,7 @@ module LearnRails
   end
 
   def self.error_message
-    <<-error.strip_heredoc
+    <<-error.gsub(/^\s+/, '')
       No ruby code available.
       See http://www.github.com/pjc/learn_rails for list of valid instructions.
     error

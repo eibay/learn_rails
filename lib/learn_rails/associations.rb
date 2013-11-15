@@ -1,35 +1,81 @@
 module LearnRails
   class Associations
-    def self.belongs_to(association)
-      parent_name   = association[2].delete ':'
-      parent_model  = parent_name.camelize
+    def self.code_for(association)
+      params = params association
+      self.send(params[:association], params)
+    end
+
+    private
+
+    def self.belongs_to(params)
+      associate_model  = params[:associate].camelize
+
       <<-code.gsub(/^\s+/, '')
-        # def #{parent_name}
-        #   #{parent_model}.find_by_id(self.#{parent_name}_id)
+        # def #{params[:associate]}
+        #   #{associate_model}.find_by_id(self.#{params[:associate]}_id)
         # end
       code
     end
 
-    def self.has_many(association)
-      parent_name   = association[0].downcase
-      children_name = association[2].delete(':').downcase
-      child_model   = children_name.singularize.camelize
+    def self.has_many(params)
+      associate_model = params[:associate].singularize.camelize
+
       <<-code.gsub(/^\s+/, '')
-        # def #{children_name}
-        #   #{child_model}.where(#{parent_name}_id: self.id)
+        # def #{params[:associate]}
+        #   #{associate_model}.where(#{params[:model]}_id: self.id)
         # end
       code
     end
 
-    def self.has_one(association)
-      parent_name = association[0].downcase
-      child_name  = association[2].delete(':').downcase
-      child_model = child_name.camelize
+    def self.has_one(params)
+      associate_model = (params[:class_name] || params[:associate]).camelize
+      foreign_id      = params[:foreign_key] || params[:model] << "_id"
+      primary_id      = params[:primary_key] || "id"
+
       <<-code.gsub(/^\s+/, '')
-        # def #{child_name}
-        #   #{child_model}.find_by_#{parent_name}_id(self.id)
+        # def #{params[:associate]}(force_reload = false)
+        #   @#{params[:associate]} = nil if force_reload
+        #   @#{params[:associate]} ||= #{associate_model}.find_by_#{foreign_id}(self.#{primary_id})
+        # end
+        #
+        # def #{params[:associate]}=(#{params[:associate]})
+        #   #{params[:associate]}.#{foreign_id} = self.#{primary_id}
+        #   #{params[:associate]}.save
+        # end
+        #
+        # def build_#{params[:associate]}(attributes = {})
+        #   attributes[:#{foreign_id}] = self.#{primary_id}
+        #   #{associate_model}.new(attributes)
+        # end
+        #
+        # def create_#{params[:associate]}(attributes = {})
+        #   attributes[:#{foreign_id}] = self.#{primary_id}
+        #   #{associate_model}.create(attributes)
+        # end
+        #
+        # def create_#{params[:associate]}!(attributes = {})
+        #   attributes[:#{foreign_id}] = self.#{primary_id}
+        #   #{associate_model}.create!(attributes)
         # end
       code
+    end
+
+    def self.params association
+      association = clean_up association
+
+      params = {}
+      params[:model]        = association.shift
+      params[:association]  = association.shift
+      params[:associate]    = association.shift
+
+      options_specified = Hash[*association].symbolize_keys!
+
+      params.merge!(options_specified)
+    end
+
+    def self.clean_up association
+      association.delete "=>"
+      association.map! { |e| e.delete(':').delete(',').delete('\"').downcase }
     end
   end
 end
