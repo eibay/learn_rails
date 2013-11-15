@@ -66,9 +66,9 @@ module LearnRails
       params[:association]  = association.shift
       params[:associate]    = association.shift
 
-      options_specified = Hash[*association]
+      options_specified = Hash[*association].symbolize_keys!
 
-      params.merge!(options_specified).symbolize_keys!
+      params.merge!(options_specified)
     end
 
     def self.clean_up association

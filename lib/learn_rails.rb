@@ -8,7 +8,6 @@ module LearnRails
     if accessor? magic
       LearnRails::Accessors.code_for magic
     elsif association? magic
-      # association_type  = magic[1]
       LearnRails::Associations.code_for magic
     else
       error_message
