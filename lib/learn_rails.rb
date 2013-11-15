@@ -27,7 +27,7 @@ module LearnRails
   end
 
   def self.error_message
-    <<-error.strip_heredoc
+    <<-error.gsub(/^\s+/, '')
       No ruby code available.
       See http://www.github.com/pjc/learn_rails for list of valid instructions.
     error
