@@ -75,7 +75,7 @@ module LearnRails
 
     def self.clean_up association
       association.delete "=>"
-      association.map! { |e| e.delete(':').delete(',').downcase }
+      association.map! { |e| e.delete(':').delete(',').delete('\"').downcase }
     end
   end
 end
