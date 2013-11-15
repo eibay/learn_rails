@@ -83,6 +83,19 @@ Feature: Associations
     And  the output should not contain "#   Task.create(attributes)"
     And  the output should not contain "#   Task.create!(attributes)"
 
+  Scenario: has_one association with :foreign_key option
+    When I run `learn rails user has_one :task, foreign_key: :employee_id`
+    Then the output should contain "#   @task ||= Task.find_by_employee_id(self.id)"
+    And  the output should contain "#   task.employee_id = self.id"
+    And  the output should contain "#   attributes[:employee_id] = self.id"
+    And  the output should contain "#   attributes[:employee_id] = self.id"
+    And  the output should contain "#   attributes[:employee_id] = self.id"
+    And  the output should not contain "#   @task ||= Task.find_by_user_id(self.id)"
+    And  the output should not contain "#   task.user_id = self.id"
+    And  the output should not contain "#   attributes[:user_id] = self.id"
+    And  the output should not contain "#   attributes[:user_id] = self.id"
+    And  the output should not contain "#   attributes[:user_id] = self.id"
+
   Scenario: has_many association
     When I run `learn rails user has_many :tasks`
     Then the output should contain "# def tasks"

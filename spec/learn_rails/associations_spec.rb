@@ -16,6 +16,12 @@ describe LearnRails::Associations do
       end
     end
 
+    it "User has_one :task, :foreign_key => :employee_id" do
+      [%w(User has_one :task, :foreign_key => :employee_id), %w(User has_one :task, foreign_key: :employee_id)].each do |association|
+        LearnRails::Associations.code_for(association).should eql has_one_with_foreign_key_code
+      end
+    end
+
     it "User has_many :tasks" do
       LearnRails::Associations.code_for(%w(User has_many :tasks)).should eql has_many_code
     end
@@ -85,6 +91,35 @@ describe LearnRails::Associations do
       # def create_task!(attributes = {})
       #   attributes[:user_id] = self.id
       #   ToDo.create!(attributes)
+      # end
+    code
+  end
+
+  def has_one_with_foreign_key_code
+    <<-code.gsub(/^\s+/, '')
+      # def task(force_reload = false)
+      #   @task = nil if force_reload
+      #   @task ||= Task.find_by_employee_id(self.id)
+      # end
+      #
+      # def task=(task)
+      #   task.employee_id = self.id
+      #   task.save
+      # end
+      #
+      # def build_task(attributes = {})
+      #   attributes[:employee_id] = self.id
+      #   Task.new(attributes)
+      # end
+      #
+      # def create_task(attributes = {})
+      #   attributes[:employee_id] = self.id
+      #   Task.create(attributes)
+      # end
+      #
+      # def create_task!(attributes = {})
+      #   attributes[:employee_id] = self.id
+      #   Task.create!(attributes)
       # end
     code
   end

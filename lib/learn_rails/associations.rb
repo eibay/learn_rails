@@ -29,30 +29,31 @@ module LearnRails
 
     def self.has_one(params)
       associate_model = (params[:class_name] || params[:associate]).camelize
+      model_id        = params[:foreign_key] || params[:model] << "_id"
 
       <<-code.gsub(/^\s+/, '')
         # def #{params[:associate]}(force_reload = false)
         #   @#{params[:associate]} = nil if force_reload
-        #   @#{params[:associate]} ||= #{associate_model}.find_by_#{params[:model]}_id(self.id)
+        #   @#{params[:associate]} ||= #{associate_model}.find_by_#{model_id}(self.id)
         # end
         #
         # def #{params[:associate]}=(#{params[:associate]})
-        #   #{params[:associate]}.#{params[:model]}_id = self.id
+        #   #{params[:associate]}.#{model_id} = self.id
         #   #{params[:associate]}.save
         # end
         #
         # def build_#{params[:associate]}(attributes = {})
-        #   attributes[:#{params[:model]}_id] = self.id
+        #   attributes[:#{model_id}] = self.id
         #   #{associate_model}.new(attributes)
         # end
         #
         # def create_#{params[:associate]}(attributes = {})
-        #   attributes[:#{params[:model]}_id] = self.id
+        #   attributes[:#{model_id}] = self.id
         #   #{associate_model}.create(attributes)
         # end
         #
         # def create_#{params[:associate]}!(attributes = {})
-        #   attributes[:#{params[:model]}_id] = self.id
+        #   attributes[:#{model_id}] = self.id
         #   #{associate_model}.create!(attributes)
         # end
       code
