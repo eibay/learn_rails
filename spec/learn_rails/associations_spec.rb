@@ -49,6 +49,16 @@ describe LearnRails::Associations do
         LearnRails::Associations.code_for(association).should eql has_one_with_primary_key_code
       end
     end
+
+    it "with readonly option" do
+      [ %w(User has_one :task, :readonly => true),
+        %w(User has_one :task, :readonly => "true"),
+        %w(User has_one :task, readonly: true),
+        %w(User has_one :task, readonly: "true")
+        ].each do |association|
+        LearnRails::Associations.code_for(association).should eql has_one_with_readonly_code
+      end
+    end
   end
 
   context "has_many association" do
@@ -182,6 +192,30 @@ describe LearnRails::Associations do
       #
       # def create_task!(attributes = {})
       #   attributes[:user_id] = self.primary_id
+      #   Task.create!(attributes)
+      # end
+    code
+  end
+
+  def has_one_with_readonly_code
+    <<-code.gsub(/^\s+/, '')
+      # def task(force_reload = false)
+      #   @task = nil if force_reload
+      #   @task ||= Task.find_by_user_id(self.id)
+      # end
+      #
+      # def build_task(attributes = {})
+      #   attributes[:user_id] = self.id
+      #   Task.new(attributes)
+      # end
+      #
+      # def create_task(attributes = {})
+      #   attributes[:user_id] = self.id
+      #   Task.create(attributes)
+      # end
+      #
+      # def create_task!(attributes = {})
+      #   attributes[:user_id] = self.id
       #   Task.create!(attributes)
       # end
     code

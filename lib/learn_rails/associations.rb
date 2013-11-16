@@ -7,22 +7,30 @@ module LearnRails
 
     private
 
+    def self.params association
+      association = clean_up association
+
+      params = {}
+      params[:model]        = association.shift
+      params[:association]  = association.shift
+      params[:associate]    = association.shift
+
+      options_specified = Hash[*association].symbolize_keys!
+
+      params.merge!(options_specified)
+    end
+
+    def self.clean_up association
+      association.delete "=>"
+      association.map! { |e| e.delete(':').delete(',').delete('\"').downcase }
+    end
+
     def self.belongs_to(params)
       associate_model  = params[:associate].camelize
 
       <<-code.gsub(/^\s+/, '')
         # def #{params[:associate]}
         #   #{associate_model}.find_by_id(self.#{params[:associate]}_id)
-        # end
-      code
-    end
-
-    def self.has_many(params)
-      associate_model = params[:associate].singularize.camelize
-
-      <<-code.gsub(/^\s+/, '')
-        # def #{params[:associate]}
-        #   #{associate_model}.where(#{params[:model]}_id: self.id)
         # end
       code
     end
@@ -37,11 +45,7 @@ module LearnRails
         #   @#{params[:associate]} = nil if force_reload
         #   @#{params[:associate]} ||= #{associate_model}.find_by_#{foreign_id}(self.#{primary_id})
         # end
-        #
-        # def #{params[:associate]}=(#{params[:associate]})
-        #   #{params[:associate]}.#{foreign_id} = self.#{primary_id}
-        #   #{params[:associate]}.save
-        # end
+        #{ setter_method(params, foreign_id, primary_id) unless params[:readonly] }
         #
         # def build_#{params[:associate]}(attributes = {})
         #   attributes[:#{foreign_id}] = self.#{primary_id}
@@ -60,22 +64,24 @@ module LearnRails
       code
     end
 
-    def self.params association
-      association = clean_up association
+    def self.has_many(params)
+      associate_model = params[:associate].singularize.camelize
 
-      params = {}
-      params[:model]        = association.shift
-      params[:association]  = association.shift
-      params[:associate]    = association.shift
-
-      options_specified = Hash[*association].symbolize_keys!
-
-      params.merge!(options_specified)
+      <<-code.gsub(/^\s+/, '')
+        # def #{params[:associate]}
+        #   #{associate_model}.where(#{params[:model]}_id: self.id)
+        # end
+      code
     end
 
-    def self.clean_up association
-      association.delete "=>"
-      association.map! { |e| e.delete(':').delete(',').delete('\"').downcase }
+    def self.setter_method params, foreign_id, primary_id
+      <<-code.gsub(/^\s+/, '')
+        #
+        # def #{params[:associate]}=(#{params[:associate]})
+        #   #{params[:associate]}.#{foreign_id} = self.#{primary_id}
+        #   #{params[:associate]}.save
+        # end
+      code
     end
   end
 end
