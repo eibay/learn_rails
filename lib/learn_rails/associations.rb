@@ -37,11 +37,7 @@ module LearnRails
         #   @#{params[:associate]} = nil if force_reload
         #   @#{params[:associate]} ||= #{associate_model}.find_by_#{foreign_id}(self.#{primary_id})
         # end
-        #
-        # def #{params[:associate]}=(#{params[:associate]})
-        #   #{params[:associate]}.#{foreign_id} = self.#{primary_id}
-        #   #{params[:associate]}.save
-        # end
+        #{ setter_method(params, foreign_id, primary_id) unless params[:readonly] }
         #
         # def build_#{params[:associate]}(attributes = {})
         #   attributes[:#{foreign_id}] = self.#{primary_id}
@@ -56,6 +52,16 @@ module LearnRails
         # def create_#{params[:associate]}!(attributes = {})
         #   attributes[:#{foreign_id}] = self.#{primary_id}
         #   #{associate_model}.create!(attributes)
+        # end
+      code
+    end
+
+    def self.setter_method params, foreign_id, primary_id
+      <<-code.gsub(/^\s+/, '')
+        #
+        # def #{params[:associate]}=(#{params[:associate]})
+        #   #{params[:associate]}.#{foreign_id} = self.#{primary_id}
+        #   #{params[:associate]}.save
         # end
       code
     end

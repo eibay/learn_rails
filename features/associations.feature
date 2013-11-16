@@ -109,6 +109,10 @@ Feature: Associations
     And  the output should not contain "#   attributes[:user_id] = self.id"
     And  the output should not contain "#   attributes[:user_id] = self.id"
 
+  Scenario: has_one association with :readonly option
+    When I run `learn rails user has_one :task, readonly: true`
+    Then the output should not contain "def task="
+
   Scenario: has_many association
     When I run `learn rails user has_many :tasks`
     Then the output should contain "# def tasks"
