@@ -40,26 +40,10 @@ Feature: Associations
 
   Scenario: has_one association with multi-word model
     When I run `learn rails user has_one :voodoo_pop`
-    Then the output should contain "# def voodoo_pop(force_reload = false)"
-    And  the output should contain "#   @voodoo_pop = nil if force_reload"
-    And  the output should contain "#   @voodoo_pop ||= VoodooPop.find_by_user_id(self.id)"
-    And  the output should contain "# end"
-    And  the output should contain "# def voodoo_pop=(voodoo_pop)"
-    And  the output should contain "#   voodoo_pop.user_id = self.id"
-    And  the output should contain "#   voodoo_pop.save"
-    And  the output should contain "# end"
-    And  the output should contain "# def build_voodoo_pop(attributes = {})"
-    And  the output should contain "#   attributes[:user_id] = self.id"
-    And  the output should contain "#   VoodooPop.new(attributes)"
-    And  the output should contain "# end"
-    And  the output should contain "# def create_voodoo_pop(attributes = {})"
-    And  the output should contain "#   attributes[:user_id] = self.id"
-    And  the output should contain "#   VoodooPop.create(attributes)"
-    And  the output should contain "# end"
-    And  the output should contain "# def create_voodoo_pop!(attributes = {})"
-    And  the output should contain "#   attributes[:user_id] = self.id"
-    And  the output should contain "#   VoodooPop.create!(attributes)"
-    And  the output should contain "# end"
+    Then the output should contain "voodoo_pop"
+    And  the output should contain "VoodooPop"
+    And  the output should not contain "voodoopop"
+    And  the output should not contain "Voodoo_Pop"
 
   Scenario: has_one association with :class_name option using the old hash syntax
     When I run `learn rails user has_one :task, :class_name => :to_do`
