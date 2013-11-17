@@ -11,7 +11,7 @@ module LearnRails
       association = clean_up association
 
       params = {}
-      params[:model]        = association.shift
+      params[:model]        = association.shift.downcase
       params[:association]  = association.shift
       params[:associate]    = association.shift
 
@@ -22,7 +22,7 @@ module LearnRails
 
     def self.clean_up association
       association.delete "=>"
-      association.map! { |e| e.delete(':').delete(',').delete('\"').downcase }
+      association.map! { |e| e.delete(':').delete(',').delete('\"') }
     end
 
     def self.belongs_to(params)

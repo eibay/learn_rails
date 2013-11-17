@@ -22,9 +22,9 @@ describe LearnRails::Associations do
 
     it "with class_name option" do
       [ %w(User has_one :task, :class_name => :to_do),
-        %w(User has_one :task, :class_name => "to_do"),
+        %w(User has_one :task, :class_name => "ToDo"),
         %w(User has_one :task, class_name: :to_do),
-        %w(User has_one :task, class_name: "to_do")
+        %w(User has_one :task, class_name: "ToDo")
         ].each do |association|
         LearnRails::Associations.code_for(association).should eql has_one_with_class_name_code
       end

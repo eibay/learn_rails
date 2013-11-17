@@ -59,7 +59,7 @@ Feature: Associations
     And  the output should not contain "Voodoo_Pop"
 
   Scenario: has_one association with :class_name option using the old hash syntax
-    When I run `learn rails user has_one :task, :class_name => :to_do`
+    When I run `learn rails user has_one :task, :class_name => "ToDo"`
     Then the output should contain "#   @task ||= ToDo.find_by_user_id(self.id)"
     And  the output should contain "#   ToDo.new(attributes)"
     And  the output should contain "#   ToDo.create(attributes)"
@@ -70,7 +70,7 @@ Feature: Associations
     And  the output should not contain "#   Task.create!(attributes)"
 
   Scenario: has_one association with :class_name option using the new hash syntax
-    When I run `learn rails user has_one :task, class_name: :to_do`
+    When I run `learn rails user has_one :task, class_name: "ToDo"`
     Then the output should contain "#   @task ||= ToDo.find_by_user_id(self.id)"
     And  the output should contain "#   ToDo.new(attributes)"
     And  the output should contain "#   ToDo.create(attributes)"
@@ -81,7 +81,7 @@ Feature: Associations
     And  the output should not contain "#   Task.create!(attributes)"
 
   Scenario: has_one association with :foreign_key option
-    When I run `learn rails user has_one :task, foreign_key: :employee_id`
+    When I run `learn rails user has_one :task, foreign_key: "employee_id"`
     Then the output should contain "#   @task ||= Task.find_by_employee_id(self.id)"
     And  the output should contain "#   task.employee_id = self.id"
     And  the output should contain "#   attributes[:employee_id] = self.id"
@@ -94,7 +94,7 @@ Feature: Associations
     And  the output should not contain "#   attributes[:user_id] = self.id"
 
   Scenario: has_one association with :primary_key option
-    When I run `learn rails user has_one :task, primary_key: :primary_id`
+    When I run `learn rails user has_one :task, primary_key: "primary_id"`
     Then the output should contain "#   @task ||= Task.find_by_user_id(self.primary_id)"
     And  the output should contain "#   task.user_id = self.primary_id"
     And  the output should contain "#   attributes[:user_id] = self.primary_id"
