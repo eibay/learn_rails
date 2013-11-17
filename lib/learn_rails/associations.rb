@@ -26,7 +26,7 @@ module LearnRails
     end
 
     def self.belongs_to(params)
-      associate_model  = params[:associate].camelize
+      associate_model  = (params[:class_name] || params[:associate]).camelize
 
       <<-code.gsub(/^\s+/, '')
         # def #{params[:associate]}

@@ -28,6 +28,13 @@ Feature: Associations
     Then the output should not contain "carpart"
     Then the output should not contain "Car_Part"
 
+  Scenario: belongs_to association with :class_name option
+    When I run `learn rails task belongs_to :user, class_name: "Person"`
+    Then the output should contain "#   Person.find_by_id(self.user_id)"
+    And  the output should contain "#  self.user = Person.new(attributes)"
+    And  the output should contain "#  self.user = Person.create(attributes)"
+    And  the output should contain "#   self.user = Person.create!(attributes)"
+
   Scenario: has_one association
     When I run `learn rails user has_one :task`
     Then the output should contain "# def task(force_reload = false)"

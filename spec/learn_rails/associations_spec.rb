@@ -9,6 +9,16 @@ describe LearnRails::Associations do
         LearnRails::Associations.code_for(association).should eql belongs_to_code
       end
     end
+
+    it "with class_name option" do
+      [ %w(Task belongs_to :user, :class_name => :person),
+        %w(Task belongs_to :user, :class_name => "person"),
+        %w(Task belongs_to :user, class_name: :person),
+        %w(Task belongs_to :user, class_name: "person")
+        ].each do |association|
+        LearnRails::Associations.code_for(association).should eql belongs_to_with_class_name_code
+      end
+    end
   end
 
   context "has_one association" do
@@ -93,6 +103,30 @@ describe LearnRails::Associations do
       #
       # def create_user!(attributes = {})
       #   self.user = User.create!(attributes)
+      # end
+    code
+  end
+
+  def belongs_to_with_class_name_code
+    <<-code.gsub(/^\s+/, '')
+      # def user
+      #   Person.find_by_id(self.user_id)
+      # end
+      #
+      # def user=(user)
+      #  self.user_id = user.id
+      # end
+      #
+      # def build_user(attributes = {})
+      #  self.user = Person.new(attributes)
+      # end
+      #
+      # def create_user(attributes = {})
+      #  self.user = Person.create(attributes)
+      # end
+      #
+      # def create_user!(attributes = {})
+      #   self.user = Person.create!(attributes)
       # end
     code
   end
