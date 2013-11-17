@@ -46,6 +46,11 @@ Feature: Associations
     Then the output should not contain "#   User.find_by_id(self.user_id)"
     Then the output should not contain "#   self.user_id = user.id"
 
+  Scenario: belongs_to association with :primary_key option
+    When I run `learn rails task belongs_to :user, primary_key: "todo_id"`
+    Then the output should contain "#   self.user_id = user.todo_id"
+    And  the output should not contain "#   self.user_id = user.id"
+
   Scenario: has_one association
     When I run `learn rails user has_one :task`
     Then the output should contain "# def task(force_reload = false)"
