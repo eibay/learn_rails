@@ -27,14 +27,15 @@ module LearnRails
 
     def self.belongs_to(params)
       associate_model  = (params[:class_name] || params[:associate]).camelize
+      foreign_id       = params[:foreign_key] || params[:associate] + "_id"
 
       <<-code.gsub(/^\s+/, '')
         # def #{params[:associate]}
-        #   #{associate_model}.find_by_id(self.#{params[:associate]}_id)
+        #   #{associate_model}.find_by_id(self.#{foreign_id})
         # end
         #
         # def #{params[:associate]}=(#{params[:associate]})
-        #   self.#{params[:associate]}_id = #{params[:associate]}.id
+        #   self.#{foreign_id} = #{params[:associate]}.id
         # end
         #
         # def build_#{params[:associate]}(attributes = {})
@@ -53,7 +54,7 @@ module LearnRails
 
     def self.has_one(params)
       associate_model = (params[:class_name] || params[:associate]).camelize
-      foreign_id      = params[:foreign_key] || params[:model] << "_id"
+      foreign_id      = params[:foreign_key] || params[:model] + "_id"
       primary_id      = params[:primary_key] || "id"
 
       <<-code.gsub(/^\s+/, '')

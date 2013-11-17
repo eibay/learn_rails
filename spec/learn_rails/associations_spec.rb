@@ -19,6 +19,16 @@ describe LearnRails::Associations do
         LearnRails::Associations.code_for(association).should eql belongs_to_with_class_name_code
       end
     end
+
+    it "with foreign_key option" do
+      [ %w(Task belongs_to :user, :foreign_key => :person_id),
+        %w(Task belongs_to :user, :foreign_key => "person_id"),
+        %w(Task belongs_to :user, foreign_key: :person_id),
+        %w(Task belongs_to :user, foreign_key: "person_id")
+        ].each do |association|
+        LearnRails::Associations.code_for(association).should eql belongs_to_with_foreign_key_code
+      end
+    end
   end
 
   context "has_one association" do
@@ -127,6 +137,30 @@ describe LearnRails::Associations do
       #
       # def create_user!(attributes = {})
       #   self.user = Person.create!(attributes)
+      # end
+    code
+  end
+
+  def belongs_to_with_foreign_key_code
+    <<-code.gsub(/^\s+/, '')
+      # def user
+      #   User.find_by_id(self.person_id)
+      # end
+      #
+      # def user=(user)
+      #   self.person_id = user.id
+      # end
+      #
+      # def build_user(attributes = {})
+      #   self.user = User.new(attributes)
+      # end
+      #
+      # def create_user(attributes = {})
+      #   self.user = User.create(attributes)
+      # end
+      #
+      # def create_user!(attributes = {})
+      #   self.user = User.create!(attributes)
       # end
     code
   end

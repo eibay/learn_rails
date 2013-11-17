@@ -39,6 +39,13 @@ Feature: Associations
     And  the output should not contain "#   self.user = User.create(attributes)"
     And  the output should not contain "#   self.user = User.create!(attributes)"
 
+  Scenario: belongs_to association with :foreign_key option
+    When I run `learn rails task belongs_to :user, foreign_key: "person_id"`
+    Then the output should contain "#   User.find_by_id(self.person_id)"
+    Then the output should contain "#   self.person_id = user.id"
+    Then the output should not contain "#   User.find_by_id(self.user_id)"
+    Then the output should not contain "#   self.user_id = user.id"
+
   Scenario: has_one association
     When I run `learn rails user has_one :task`
     Then the output should contain "# def task(force_reload = false)"
