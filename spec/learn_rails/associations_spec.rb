@@ -78,6 +78,22 @@ describe LearnRails::Associations do
       # def user
       #   User.find_by_id(self.user_id)
       # end
+      #
+      # def user=(user)
+      #  self.user_id = user.id
+      # end
+      #
+      # def build_user(attributes = {})
+      #  self.user = User.new(attributes)
+      # end
+      #
+      # def create_user(attributes = {})
+      #  self.user = User.create(attributes)
+      # end
+      #
+      # def create_user!(attributes = {})
+      #   self.user = User.create!(attributes)
+      # end
     code
   end
 

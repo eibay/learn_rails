@@ -8,12 +8,25 @@ Feature: Associations
     Then the output should contain "# def user"
     And  the output should contain "#   User.find_by_id(self.user_id)"
     And  the output should contain "# end"
+    And  the output should contain "# def user=(user)"
+    And  the output should contain "#  self.user_id = user.id"
+    And  the output should contain "# end"
+    And  the output should contain "# def build_user(attributes = {})"
+    And  the output should contain "#  self.user = User.new(attributes)"
+    And  the output should contain "# end"
+    And  the output should contain "# def create_user(attributes = {})"
+    And  the output should contain "#  self.user = User.create(attributes)"
+    And  the output should contain "# end"
+    And  the output should contain "# def create_user!(attributes = {})"
+    And  the output should contain "#   self.user = User.create!(attributes)"
+    And  the output should contain "# end"
 
   Scenario: belongs_to association with multi-word model
     When I run `learn rails manual belongs_to :car_part`
-    Then the output should contain "# def car_part"
-    And  the output should contain "#   CarPart.find_by_id(self.car_part_id)"
-    And  the output should contain "# end"
+    Then the output should contain "car_part"
+    Then the output should contain "CarPart"
+    Then the output should not contain "carpart"
+    Then the output should not contain "Car_Part"
 
   Scenario: has_one association
     When I run `learn rails user has_one :task`
