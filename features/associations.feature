@@ -53,7 +53,8 @@ Feature: Associations
 
   Scenario: belongs_to association with :readonly option
     When I run `learn rails task belongs_to :user, readonly: true`
-    Then the output should not contain "# def user=(user)"
+    Then the output should contain "# def"
+    And  the output should not contain "# def user=(user)"
     And  the output should not contain "#   self.user_id = user.id"
 
   Scenario: has_one association
@@ -136,7 +137,9 @@ Feature: Associations
 
   Scenario: has_one association with :readonly option
     When I run `learn rails user has_one :task, readonly: true`
-    Then the output should not contain "def task="
+    Then the output should contain "# def"
+    And  the output should not contain "# def task="
+    And  the output should not contain "#   task.user_id = self.id"
 
   Scenario: has_many association
     When I run `learn rails user has_many :tasks`
