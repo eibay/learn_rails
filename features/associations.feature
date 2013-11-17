@@ -8,12 +8,54 @@ Feature: Associations
     Then the output should contain "# def user"
     And  the output should contain "#   User.find_by_id(self.user_id)"
     And  the output should contain "# end"
+    And  the output should contain "# def user=(user)"
+    And  the output should contain "#   self.user_id = user.id"
+    And  the output should contain "# end"
+    And  the output should contain "# def build_user(attributes = {})"
+    And  the output should contain "#   self.user = User.new(attributes)"
+    And  the output should contain "# end"
+    And  the output should contain "# def create_user(attributes = {})"
+    And  the output should contain "#   self.user = User.create(attributes)"
+    And  the output should contain "# end"
+    And  the output should contain "# def create_user!(attributes = {})"
+    And  the output should contain "#   self.user = User.create!(attributes)"
+    And  the output should contain "# end"
 
   Scenario: belongs_to association with multi-word model
     When I run `learn rails manual belongs_to :car_part`
-    Then the output should contain "# def car_part"
-    And  the output should contain "#   CarPart.find_by_id(self.car_part_id)"
-    And  the output should contain "# end"
+    Then the output should contain "car_part"
+    Then the output should contain "CarPart"
+    Then the output should not contain "carpart"
+    Then the output should not contain "Car_Part"
+
+  Scenario: belongs_to association with :class_name option
+    When I run `learn rails task belongs_to :user, class_name: "Person"`
+    Then the output should contain "#   Person.find_by_id(self.user_id)"
+    And  the output should contain "#   self.user = Person.new(attributes)"
+    And  the output should contain "#   self.user = Person.create(attributes)"
+    And  the output should contain "#   self.user = Person.create!(attributes)"
+    And  the output should not contain "#   User.find_by_id(self.user_id)"
+    And  the output should not contain "#   self.user = User.new(attributes)"
+    And  the output should not contain "#   self.user = User.create(attributes)"
+    And  the output should not contain "#   self.user = User.create!(attributes)"
+
+  Scenario: belongs_to association with :foreign_key option
+    When I run `learn rails task belongs_to :user, foreign_key: "person_id"`
+    Then the output should contain "#   User.find_by_id(self.person_id)"
+    Then the output should contain "#   self.person_id = user.id"
+    Then the output should not contain "#   User.find_by_id(self.user_id)"
+    Then the output should not contain "#   self.user_id = user.id"
+
+  Scenario: belongs_to association with :primary_key option
+    When I run `learn rails task belongs_to :user, primary_key: "todo_id"`
+    Then the output should contain "#   self.user_id = user.todo_id"
+    And  the output should not contain "#   self.user_id = user.id"
+
+  Scenario: belongs_to association with :readonly option
+    When I run `learn rails task belongs_to :user, readonly: true`
+    Then the output should contain "# def"
+    And  the output should not contain "# def user=(user)"
+    And  the output should not contain "#   self.user_id = user.id"
 
   Scenario: has_one association
     When I run `learn rails user has_one :task`
@@ -40,29 +82,13 @@ Feature: Associations
 
   Scenario: has_one association with multi-word model
     When I run `learn rails user has_one :voodoo_pop`
-    Then the output should contain "# def voodoo_pop(force_reload = false)"
-    And  the output should contain "#   @voodoo_pop = nil if force_reload"
-    And  the output should contain "#   @voodoo_pop ||= VoodooPop.find_by_user_id(self.id)"
-    And  the output should contain "# end"
-    And  the output should contain "# def voodoo_pop=(voodoo_pop)"
-    And  the output should contain "#   voodoo_pop.user_id = self.id"
-    And  the output should contain "#   voodoo_pop.save"
-    And  the output should contain "# end"
-    And  the output should contain "# def build_voodoo_pop(attributes = {})"
-    And  the output should contain "#   attributes[:user_id] = self.id"
-    And  the output should contain "#   VoodooPop.new(attributes)"
-    And  the output should contain "# end"
-    And  the output should contain "# def create_voodoo_pop(attributes = {})"
-    And  the output should contain "#   attributes[:user_id] = self.id"
-    And  the output should contain "#   VoodooPop.create(attributes)"
-    And  the output should contain "# end"
-    And  the output should contain "# def create_voodoo_pop!(attributes = {})"
-    And  the output should contain "#   attributes[:user_id] = self.id"
-    And  the output should contain "#   VoodooPop.create!(attributes)"
-    And  the output should contain "# end"
+    Then the output should contain "voodoo_pop"
+    And  the output should contain "VoodooPop"
+    And  the output should not contain "voodoopop"
+    And  the output should not contain "Voodoo_Pop"
 
   Scenario: has_one association with :class_name option using the old hash syntax
-    When I run `learn rails user has_one :task, :class_name => :to_do`
+    When I run `learn rails user has_one :task, :class_name => "ToDo"`
     Then the output should contain "#   @task ||= ToDo.find_by_user_id(self.id)"
     And  the output should contain "#   ToDo.new(attributes)"
     And  the output should contain "#   ToDo.create(attributes)"
@@ -73,7 +99,7 @@ Feature: Associations
     And  the output should not contain "#   Task.create!(attributes)"
 
   Scenario: has_one association with :class_name option using the new hash syntax
-    When I run `learn rails user has_one :task, class_name: :to_do`
+    When I run `learn rails user has_one :task, class_name: "ToDo"`
     Then the output should contain "#   @task ||= ToDo.find_by_user_id(self.id)"
     And  the output should contain "#   ToDo.new(attributes)"
     And  the output should contain "#   ToDo.create(attributes)"
@@ -84,7 +110,7 @@ Feature: Associations
     And  the output should not contain "#   Task.create!(attributes)"
 
   Scenario: has_one association with :foreign_key option
-    When I run `learn rails user has_one :task, foreign_key: :employee_id`
+    When I run `learn rails user has_one :task, foreign_key: "employee_id"`
     Then the output should contain "#   @task ||= Task.find_by_employee_id(self.id)"
     And  the output should contain "#   task.employee_id = self.id"
     And  the output should contain "#   attributes[:employee_id] = self.id"
@@ -97,7 +123,7 @@ Feature: Associations
     And  the output should not contain "#   attributes[:user_id] = self.id"
 
   Scenario: has_one association with :primary_key option
-    When I run `learn rails user has_one :task, primary_key: :primary_id`
+    When I run `learn rails user has_one :task, primary_key: "primary_id"`
     Then the output should contain "#   @task ||= Task.find_by_user_id(self.primary_id)"
     And  the output should contain "#   task.user_id = self.primary_id"
     And  the output should contain "#   attributes[:user_id] = self.primary_id"
@@ -111,7 +137,9 @@ Feature: Associations
 
   Scenario: has_one association with :readonly option
     When I run `learn rails user has_one :task, readonly: true`
-    Then the output should not contain "def task="
+    Then the output should contain "# def"
+    And  the output should not contain "# def task="
+    And  the output should not contain "#   task.user_id = self.id"
 
   Scenario: has_many association
     When I run `learn rails user has_many :tasks`

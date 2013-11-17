@@ -9,6 +9,46 @@ describe LearnRails::Associations do
         LearnRails::Associations.code_for(association).should eql belongs_to_code
       end
     end
+
+    it "with class_name option" do
+      [ %w(Task belongs_to :user, :class_name => :person),
+        %w(Task belongs_to :user, :class_name => "person"),
+        %w(Task belongs_to :user, class_name: :person),
+        %w(Task belongs_to :user, class_name: "person")
+        ].each do |association|
+        LearnRails::Associations.code_for(association).should eql belongs_to_with_class_name_code
+      end
+    end
+
+    it "with foreign_key option" do
+      [ %w(Task belongs_to :user, :foreign_key => :person_id),
+        %w(Task belongs_to :user, :foreign_key => "person_id"),
+        %w(Task belongs_to :user, foreign_key: :person_id),
+        %w(Task belongs_to :user, foreign_key: "person_id")
+        ].each do |association|
+        LearnRails::Associations.code_for(association).should eql belongs_to_with_foreign_key_code
+      end
+    end
+
+    it "with primary_key option" do
+      [ %w(Task belongs_to :user, :primary_key => :todo_id),
+        %w(Task belongs_to :user, :primary_key => "todo_id"),
+        %w(Task belongs_to :user, primary_key: :todo_id),
+        %w(Task belongs_to :user, primary_key: "todo_id")
+        ].each do |association|
+        LearnRails::Associations.code_for(association).should eql belongs_to_with_primary_key_code
+      end
+    end
+
+    it "with readonly option" do
+      [ %w(Task belongs_to :user, :readonly => true),
+        %w(Task belongs_to :user, :readonly => "true"),
+        %w(Task belongs_to :user, readonly: true),
+        %w(Task belongs_to :user, readonly: "true")
+        ].each do |association|
+        LearnRails::Associations.code_for(association).should eql belongs_to_with_readonly_code
+      end
+    end
   end
 
   context "has_one association" do
@@ -22,9 +62,9 @@ describe LearnRails::Associations do
 
     it "with class_name option" do
       [ %w(User has_one :task, :class_name => :to_do),
-        %w(User has_one :task, :class_name => "to_do"),
+        %w(User has_one :task, :class_name => "ToDo"),
         %w(User has_one :task, class_name: :to_do),
-        %w(User has_one :task, class_name: "to_do")
+        %w(User has_one :task, class_name: "ToDo")
         ].each do |association|
         LearnRails::Associations.code_for(association).should eql has_one_with_class_name_code
       end
@@ -77,6 +117,114 @@ describe LearnRails::Associations do
     <<-code.gsub(/^\s+/, '')
       # def user
       #   User.find_by_id(self.user_id)
+      # end
+      #
+      # def user=(user)
+      #   self.user_id = user.id
+      # end
+      #
+      # def build_user(attributes = {})
+      #   self.user = User.new(attributes)
+      # end
+      #
+      # def create_user(attributes = {})
+      #   self.user = User.create(attributes)
+      # end
+      #
+      # def create_user!(attributes = {})
+      #   self.user = User.create!(attributes)
+      # end
+    code
+  end
+
+  def belongs_to_with_class_name_code
+    <<-code.gsub(/^\s+/, '')
+      # def user
+      #   Person.find_by_id(self.user_id)
+      # end
+      #
+      # def user=(user)
+      #   self.user_id = user.id
+      # end
+      #
+      # def build_user(attributes = {})
+      #   self.user = Person.new(attributes)
+      # end
+      #
+      # def create_user(attributes = {})
+      #   self.user = Person.create(attributes)
+      # end
+      #
+      # def create_user!(attributes = {})
+      #   self.user = Person.create!(attributes)
+      # end
+    code
+  end
+
+  def belongs_to_with_foreign_key_code
+    <<-code.gsub(/^\s+/, '')
+      # def user
+      #   User.find_by_id(self.person_id)
+      # end
+      #
+      # def user=(user)
+      #   self.person_id = user.id
+      # end
+      #
+      # def build_user(attributes = {})
+      #   self.user = User.new(attributes)
+      # end
+      #
+      # def create_user(attributes = {})
+      #   self.user = User.create(attributes)
+      # end
+      #
+      # def create_user!(attributes = {})
+      #   self.user = User.create!(attributes)
+      # end
+    code
+  end
+
+  def belongs_to_with_primary_key_code
+    <<-code.gsub(/^\s+/, '')
+      # def user
+      #   User.find_by_id(self.user_id)
+      # end
+      #
+      # def user=(user)
+      #   self.user_id = user.todo_id
+      # end
+      #
+      # def build_user(attributes = {})
+      #   self.user = User.new(attributes)
+      # end
+      #
+      # def create_user(attributes = {})
+      #   self.user = User.create(attributes)
+      # end
+      #
+      # def create_user!(attributes = {})
+      #   self.user = User.create!(attributes)
+      # end
+    code
+  end
+
+  def belongs_to_with_readonly_code
+    <<-code.gsub(/^\s+/, '')
+      # def user
+      #   User.find_by_id(self.user_id)
+      # end
+      #
+      # def build_user(attributes = {})
+      #   self.user = User.new(attributes)
+      # end
+      #
+      # def create_user(attributes = {})
+      #   self.user = User.create(attributes)
+      # end
+      #
+      # def create_user!(attributes = {})
+      #   self.user = User.create!(attributes)
       # end
     code
   end
