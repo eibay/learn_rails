@@ -90,15 +90,15 @@ describe LearnRails::Associations do
       # end
       #
       # def user=(user)
-      #  self.user_id = user.id
+      #   self.user_id = user.id
       # end
       #
       # def build_user(attributes = {})
-      #  self.user = User.new(attributes)
+      #   self.user = User.new(attributes)
       # end
       #
       # def create_user(attributes = {})
-      #  self.user = User.create(attributes)
+      #   self.user = User.create(attributes)
       # end
       #
       # def create_user!(attributes = {})
@@ -114,15 +114,15 @@ describe LearnRails::Associations do
       # end
       #
       # def user=(user)
-      #  self.user_id = user.id
+      #   self.user_id = user.id
       # end
       #
       # def build_user(attributes = {})
-      #  self.user = Person.new(attributes)
+      #   self.user = Person.new(attributes)
       # end
       #
       # def create_user(attributes = {})
-      #  self.user = Person.create(attributes)
+      #   self.user = Person.create(attributes)
       # end
       #
       # def create_user!(attributes = {})

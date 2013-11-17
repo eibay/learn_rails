@@ -9,13 +9,13 @@ Feature: Associations
     And  the output should contain "#   User.find_by_id(self.user_id)"
     And  the output should contain "# end"
     And  the output should contain "# def user=(user)"
-    And  the output should contain "#  self.user_id = user.id"
+    And  the output should contain "#   self.user_id = user.id"
     And  the output should contain "# end"
     And  the output should contain "# def build_user(attributes = {})"
-    And  the output should contain "#  self.user = User.new(attributes)"
+    And  the output should contain "#   self.user = User.new(attributes)"
     And  the output should contain "# end"
     And  the output should contain "# def create_user(attributes = {})"
-    And  the output should contain "#  self.user = User.create(attributes)"
+    And  the output should contain "#   self.user = User.create(attributes)"
     And  the output should contain "# end"
     And  the output should contain "# def create_user!(attributes = {})"
     And  the output should contain "#   self.user = User.create!(attributes)"
@@ -31,8 +31,8 @@ Feature: Associations
   Scenario: belongs_to association with :class_name option
     When I run `learn rails task belongs_to :user, class_name: "Person"`
     Then the output should contain "#   Person.find_by_id(self.user_id)"
-    And  the output should contain "#  self.user = Person.new(attributes)"
-    And  the output should contain "#  self.user = Person.create(attributes)"
+    And  the output should contain "#   self.user = Person.new(attributes)"
+    And  the output should contain "#   self.user = Person.create(attributes)"
     And  the output should contain "#   self.user = Person.create!(attributes)"
 
   Scenario: has_one association

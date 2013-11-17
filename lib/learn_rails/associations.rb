@@ -34,15 +34,15 @@ module LearnRails
         # end
         #
         # def #{params[:associate]}=(#{params[:associate]})
-        #  self.#{params[:associate]}_id = #{params[:associate]}.id
+        #   self.#{params[:associate]}_id = #{params[:associate]}.id
         # end
         #
         # def build_#{params[:associate]}(attributes = {})
-        #  self.#{params[:associate]} = #{associate_model}.new(attributes)
+        #   self.#{params[:associate]} = #{associate_model}.new(attributes)
         # end
         #
         # def create_#{params[:associate]}(attributes = {})
-        #  self.#{params[:associate]} = #{associate_model}.create(attributes)
+        #   self.#{params[:associate]} = #{associate_model}.create(attributes)
         # end
         #
         # def create_#{params[:associate]}!(attributes = {})
