@@ -39,6 +39,16 @@ describe LearnRails::Associations do
         LearnRails::Associations.code_for(association).should eql belongs_to_with_primary_key_code
       end
     end
+
+    it "with readonly option" do
+      [ %w(Task belongs_to :user, :readonly => true),
+        %w(Task belongs_to :user, :readonly => "true"),
+        %w(Task belongs_to :user, readonly: true),
+        %w(Task belongs_to :user, readonly: "true")
+        ].each do |association|
+        LearnRails::Associations.code_for(association).should eql belongs_to_with_readonly_code
+      end
+    end
   end
 
   context "has_one association" do
@@ -183,6 +193,26 @@ describe LearnRails::Associations do
       #
       # def user=(user)
       #   self.user_id = user.todo_id
+      # end
+      #
+      # def build_user(attributes = {})
+      #   self.user = User.new(attributes)
+      # end
+      #
+      # def create_user(attributes = {})
+      #   self.user = User.create(attributes)
+      # end
+      #
+      # def create_user!(attributes = {})
+      #   self.user = User.create!(attributes)
+      # end
+    code
+  end
+
+  def belongs_to_with_readonly_code
+    <<-code.gsub(/^\s+/, '')
+      # def user
+      #   User.find_by_id(self.user_id)
       # end
       #
       # def build_user(attributes = {})
