@@ -34,6 +34,10 @@ Feature: Associations
     And  the output should contain "#   self.user = Person.new(attributes)"
     And  the output should contain "#   self.user = Person.create(attributes)"
     And  the output should contain "#   self.user = Person.create!(attributes)"
+    And  the output should not contain "#   User.find_by_id(self.user_id)"
+    And  the output should not contain "#   self.user = User.new(attributes)"
+    And  the output should not contain "#   self.user = User.create(attributes)"
+    And  the output should not contain "#   self.user = User.create!(attributes)"
 
   Scenario: has_one association
     When I run `learn rails user has_one :task`
