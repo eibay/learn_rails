@@ -31,8 +31,9 @@ module LearnRails
       primary_id      = params[:primary_key] || "id"
 
       <<-code.gsub(/^\s+/, '')
-        # def #{params[:associate]}
-        #   #{associate_model}.find_by_id(self.#{foreign_id})
+        # def #{params[:associate]}(force_reload = false)
+        #   @#{params[:associate]} = nil if force_reload
+        #   @#{params[:associate]} ||= #{associate_model}.find_by_id(self.#{foreign_id})
         # end
         #{ belongs_to_setter_method(params, foreign_id, primary_id) unless params[:readonly] }
         #
