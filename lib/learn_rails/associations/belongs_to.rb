@@ -37,7 +37,6 @@ module LearnRails
       code
     end
 
-
     def self.getter_method params
       <<-code.gsub(/^\s+/, '')
           # def #{params[:associate]}
