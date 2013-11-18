@@ -115,11 +115,11 @@ Happy learning!
 
 Accessors:
 
-    $ learn rails attr_reader :as, :many:, :attributes, :as, :you, :want
+    $ learn rails attr_reader :as, :many, :attributes, :as, :you, :want
 
-    $ learn rails attr_writer :as, :many:, :attributes, :as, :you, :want
+    $ learn rails attr_writer :as, :many, :attributes, :as, :you, :want
 
-    $ learn rails attr_accessor :as, :many:, :attributes, :as, :you, :want
+    $ learn rails attr_accessor :as, :many, :attributes, :as, :you, :want
 
 Associations:
 

@@ -115,8 +115,9 @@ describe LearnRails::Associations do
 
   def belongs_to_code
     <<-code.gsub(/^\s+/, '')
-      # def user
-      #   User.find_by_id(self.user_id)
+      # def user(force_reload = false)
+      #   @user = nil if force_reload
+      #   @user ||= User.find_by_id(self.user_id)
       # end
       #
       # def user=(user)
@@ -139,8 +140,9 @@ describe LearnRails::Associations do
 
   def belongs_to_with_class_name_code
     <<-code.gsub(/^\s+/, '')
-      # def user
-      #   Person.find_by_id(self.user_id)
+      # def user(force_reload = false)
+      #   @user = nil if force_reload
+      #   @user ||= Person.find_by_id(self.user_id)
       # end
       #
       # def user=(user)
@@ -163,8 +165,9 @@ describe LearnRails::Associations do
 
   def belongs_to_with_foreign_key_code
     <<-code.gsub(/^\s+/, '')
-      # def user
-      #   User.find_by_id(self.person_id)
+      # def user(force_reload = false)
+      #   @user = nil if force_reload
+      #   @user ||= User.find_by_id(self.person_id)
       # end
       #
       # def user=(user)
@@ -187,8 +190,9 @@ describe LearnRails::Associations do
 
   def belongs_to_with_primary_key_code
     <<-code.gsub(/^\s+/, '')
-      # def user
-      #   User.find_by_id(self.user_id)
+      # def user(force_reload = false)
+      #   @user = nil if force_reload
+      #   @user ||= User.find_by_id(self.user_id)
       # end
       #
       # def user=(user)
@@ -211,8 +215,9 @@ describe LearnRails::Associations do
 
   def belongs_to_with_readonly_code
     <<-code.gsub(/^\s+/, '')
-      # def user
-      #   User.find_by_id(self.user_id)
+      # def user(force_reload = false)
+      #   @user = nil if force_reload
+      #   @user ||= User.find_by_id(self.user_id)
       # end
       #
       # def build_user(attributes = {})
