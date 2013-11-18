@@ -1,5 +1,8 @@
 require "learn_rails/version"
 require "learn_rails/associations"
+require "learn_rails/associations/belongs_to"
+require "learn_rails/associations/has_one"
+require "learn_rails/associations/has_many"
 require "learn_rails/accessors"
 require "active_support/core_ext/string"
 

@@ -2,7 +2,7 @@ module LearnRails
   class Associations
     def self.code_for(association)
       params = params association
-      self.send(params[:association], params)
+      "LearnRails::Associations::#{params[:association].camelize}".constantize.send(:code_for, params)
     end
 
     private
