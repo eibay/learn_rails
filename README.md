@@ -47,11 +47,6 @@ Say you want to know what the `attr_accessor :color, :size` line in one of the m
 
 The gem will now print the following ruby code in your terminal output:
 
-    # def initialize(color, size)
-    #  @color = color
-    #  @size = size
-    # end
-    #
     # def color
     #  @color
     # end
