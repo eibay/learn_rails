@@ -41,10 +41,6 @@ describe LearnRails::Accessors do
 
   def attr_reader_code
     <<-code.gsub(/^\s+/, '')
-      # def initialize(name)
-      #  @name = name
-      # end
-      #
       # def name
       #  @name
       # end
@@ -53,10 +49,6 @@ describe LearnRails::Accessors do
 
   def attr_writer_code
     <<-code.gsub(/^\s+/, '')
-      # def initialize(name)
-      #  @name = name
-      # end
-      #
       # def name=(value)
       #  @name = value
       # end
@@ -65,10 +57,6 @@ describe LearnRails::Accessors do
 
   def attr_accessor_code
     <<-code.gsub(/^\s+/, '')
-      # def initialize(name)
-      #  @name = name
-      # end
-      #
       # def name
       #  @name
       # end
@@ -81,11 +69,6 @@ describe LearnRails::Accessors do
 
   def attr_reader_two_attributes_code
     <<-code.gsub(/^\s+/, '')
-      # def initialize(name, another)
-      #  @name = name
-      #  @another = another
-      # end
-      #
       # def name
       #  @name
       # end
@@ -98,11 +81,6 @@ describe LearnRails::Accessors do
 
   def attr_writer_two_attributes_code
     <<-code.gsub(/^\s+/, '')
-      # def initialize(name, another)
-      #  @name = name
-      #  @another = another
-      # end
-      #
       # def name=(value)
       #  @name = value
       # end
@@ -115,11 +93,6 @@ describe LearnRails::Accessors do
 
   def attr_accessor_two_attributes_code
     <<-code.gsub(/^\s+/, '')
-      # def initialize(name, another)
-      #  @name = name
-      #  @another = another
-      # end
-      #
       # def name
       #  @name
       # end
