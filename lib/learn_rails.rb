@@ -9,6 +9,7 @@ require "active_support/core_ext/string"
 module LearnRails
   def self.analyze(*magic)
     if accessor? magic
+      remove_model_name_from magic
       LearnRails::Accessors.code_for magic
     elsif association? magic
       LearnRails::Associations.code_for magic
@@ -20,8 +21,12 @@ module LearnRails
   private
 
   def self.accessor? magic
-    potential_attr = magic[0]
-    ['attr_reader', 'attr_writer', 'attr_accessor'].include? potential_attr
+    (magic[0..1] & ['attr_reader', 'attr_writer', 'attr_accessor']).any?
+  end
+
+  def self.remove_model_name_from magic
+    magic.shift unless ['attr_reader', 'attr_writer', 'attr_accessor'].include? magic[0]
+    magic
   end
 
   def self.association? magic

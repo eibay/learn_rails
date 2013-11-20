@@ -24,6 +24,27 @@ Feature: Accessors
     And  the output should contain "#  @whatever = value"
     And  the output should contain "# end"
 
+  Scenario: attr_reader with anymodelname
+    When I run `learn rails anymodelname attr_reader :whatever`
+    And  the output should contain "# def whatever"
+    And  the output should contain "#  @whatever"
+    And  the output should contain "# end"
+
+  Scenario: attr_writer with anymodelname
+    When I run `learn rails anymodelname attr_writer :whatever`
+    And  the output should contain "# def whatever=(value)"
+    And  the output should contain "#  @whatever = value"
+    And  the output should contain "# end"
+
+  Scenario: attr_accessor with anymodelname
+    When I run `learn rails anymodelname attr_accessor :whatever`
+    And  the output should contain "# def whatever"
+    And  the output should contain "#  @whatever"
+    And  the output should contain "# end"
+    And  the output should contain "# def whatever=(value)"
+    And  the output should contain "#  @whatever = value"
+    And  the output should contain "# end"
+
   Scenario: attr_reader with multiple attributes
     When I run `learn rails attr_reader :whatever, :another`
     And  the output should contain "# def whatever"
