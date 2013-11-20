@@ -22,6 +22,25 @@ Feature: Associations
     And  the output should contain "#   self.user = User.create!(attributes)"
     And  the output should contain "# end"
 
+  Scenario: belongs_to association without the model name
+    When I run `learn rails belongs_to :user`
+    Then the output should contain "# def user"
+    And  the output should contain "#   @user = nil if force_reload"
+    And  the output should contain "#   @user ||= User.find_by_id(self.user_id)"
+    And  the output should contain "# end"
+    And  the output should contain "# def user=(user)"
+    And  the output should contain "#   self.user_id = user.id"
+    And  the output should contain "# end"
+    And  the output should contain "# def build_user(attributes = {})"
+    And  the output should contain "#   self.user = User.new(attributes)"
+    And  the output should contain "# end"
+    And  the output should contain "# def create_user(attributes = {})"
+    And  the output should contain "#   self.user = User.create(attributes)"
+    And  the output should contain "# end"
+    And  the output should contain "# def create_user!(attributes = {})"
+    And  the output should contain "#   self.user = User.create!(attributes)"
+    And  the output should contain "# end"
+
   Scenario: belongs_to association with multi-word model
     When I run `learn rails manual belongs_to :car_part`
     Then the output should contain "car_part"
@@ -60,6 +79,36 @@ Feature: Associations
 
   Scenario: has_one association
     When I run `learn rails user has_one :task`
+    Then the output should contain "# def task(force_reload = false)"
+    And  the output should contain "#   @task = nil if force_reload"
+    And  the output should contain "#   @task ||= Task.find_by_user_id(self.id)"
+    And  the output should contain "# end"
+    And  the output should contain "# def task=(task)"
+    And  the output should contain "#   task.user_id = self.id"
+    And  the output should contain "#   task.save"
+    And  the output should contain "# end"
+    And  the output should contain "# def build_task(attributes = {})"
+    And  the output should contain "#   attributes[:user_id] = self.id"
+    And  the output should contain "#   Task.new(attributes)"
+    And  the output should contain "# end"
+    And  the output should contain "# def create_task(attributes = {})"
+    And  the output should contain "#   attributes[:user_id] = self.id"
+    And  the output should contain "#   Task.create(attributes)"
+    And  the output should contain "# end"
+    And  the output should contain "# def create_task!(attributes = {})"
+    And  the output should contain "#   attributes[:user_id] = self.id"
+    And  the output should contain "#   Task.create!(attributes)"
+    And  the output should contain "# end"
+
+  Scenario: has_one association without the model name
+    Given PENDING: Aruba process keeps hanging, need to test for terminal question
+    When I run `learn rails has_one :task`
+    Then the output should contain "What is the model name for this association?"
+
+  Scenario: has_one association with model name given when prompted
+    Given PENDING: Aruba process keeps hanging, need to test for terminal question
+    When I run `learn rails has_one :task`
+    And I type `user`
     Then the output should contain "# def task(force_reload = false)"
     And  the output should contain "#   @task = nil if force_reload"
     And  the output should contain "#   @task ||= Task.find_by_user_id(self.id)"
@@ -144,6 +193,19 @@ Feature: Associations
 
   Scenario: has_many association
     When I run `learn rails user has_many :tasks`
+    Then the output should contain "# def tasks"
+    And  the output should contain "#   Task.where(user_id: self.id)"
+    And  the output should contain "# end"
+
+  Scenario: has_many association without the model name
+    Given PENDING: Aruba process keeps hanging, need to test for terminal question
+    When I run `learn rails has_many :tasks`
+    Then the output should contain "What is the model name for this association?"
+
+  Scenario: has_many association with model name given when prompted
+    Given PENDING: Aruba process keeps hanging, need to test for terminal question
+    When I run `learn rails has_many :tasks`
+    And I type `user`
     Then the output should contain "# def tasks"
     And  the output should contain "#   Task.where(user_id: self.id)"
     And  the output should contain "# end"
