@@ -1,38 +1,44 @@
 require 'learn_rails'
 
 describe LearnRails::Accessors do
-  context "should return the right commented out ruby code for accessor:" do
-    it "attr_reader :name" do
-      LearnRails::Accessors.code_for(%w(attr_reader :name)).should eql attr_reader_code
+  context "attr" do
+    context "readers" do
+      it "attr_reader :name" do
+        LearnRails::Accessors.code_for(%w(attr_reader :name)).should eql attr_reader_code
+      end
+
+      it "attr_reader :name, :another" do
+        LearnRails::Accessors.code_for(%w(attr_reader :name, :another)).should eql attr_reader_two_attributes_code
+      end
     end
 
-    it "attr_writer :name" do
-      LearnRails::Accessors.code_for(%w(attr_writer :name)).should eql attr_writer_code
+    context "writers" do
+      it "attr_writer :name" do
+        LearnRails::Accessors.code_for(%w(attr_writer :name)).should eql attr_writer_code
+      end
+
+      it "attr_writer :name, :another" do
+        LearnRails::Accessors.code_for(%w(attr_writer :name, :another)).should eql attr_writer_two_attributes_code
+      end
     end
 
-    it "attr_accessor :name" do
-      LearnRails::Accessors.code_for(%w(attr_accessor :name)).should eql attr_accessor_code
-    end
+    context "accessors" do
+      it "attr_accessor :name" do
+        LearnRails::Accessors.code_for(%w(attr_accessor :name)).should eql attr_accessor_code
+      end
 
-    it "attr_reader :name, :another" do
-      LearnRails::Accessors.code_for(%w(attr_reader :name, :another)).should eql attr_reader_two_attributes_code
-    end
-
-    it "attr_writer :name, :another" do
-      LearnRails::Accessors.code_for(%w(attr_writer :name, :another)).should eql attr_writer_two_attributes_code
-    end
-
-    it "attr_accessor :name, :another" do
-      LearnRails::Accessors.code_for(%w(attr_accessor :name, :another)).should eql attr_accessor_two_attributes_code
+      it "attr_accessor :name, :another" do
+        LearnRails::Accessors.code_for(%w(attr_accessor :name, :another)).should eql attr_accessor_two_attributes_code
+      end
     end
   end
 
-  context "should not return commas in the code" do
-  it "when it is a comma right after the last attribute" do
+  context "with comma" do
+    it "right after the last attribute" do
       LearnRails::Accessors.code_for(%w(attr_accessor :name,)).should eql attr_accessor_code
     end
 
-    it "when it is a comma seperated by a space" do
+    it "seperated by a space" do
       LearnRails::Accessors.code_for(%w(attr_accessor :name ,)).should  eql attr_accessor_code
     end
   end
