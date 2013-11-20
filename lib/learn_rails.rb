@@ -1,4 +1,5 @@
 require "learn_rails/version"
+require "ext/hash"
 require "learn_rails/associations"
 require "learn_rails/associations/belongs_to"
 require "learn_rails/associations/has_one"

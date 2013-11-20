@@ -58,6 +58,14 @@ Feature: Associations
     And  the output should not contain "# def user=(user)"
     And  the output should not contain "#   self.user_id = user.id"
 
+  Scenario: belongs_to association with :conditions option
+    When I run `learn rails task belongs_to :user, conditions: { status: "active"}`
+    And  the output should contain "# def user(force_reload = false)"
+    And  the output should contain:
+      """
+      #   @user ||= User.first(:conditions => {:id => self.user_id, :status => "active")
+      """
+
   Scenario: has_one association
     When I run `learn rails user has_one :task`
     Then the output should contain "# def task(force_reload = false)"

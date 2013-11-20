@@ -49,6 +49,30 @@ describe LearnRails::Associations do
         LearnRails::Associations.code_for(association).should eql belongs_to_with_readonly_code
       end
     end
+
+    context "with conditions options" do
+      context "one option" do
+        it "should return the correct code" do
+          [ %w(Task belongs_to :user, :conditions => { :status => "active" }),
+            %w(Task belongs_to :user, :conditions => {status: "active"}),
+            %w(Task belongs_to :user, :conditions => { status: "active"}),
+            %w(Task belongs_to :user, :conditions => {status: "active" }),
+          ].each do |association|
+            LearnRails::Associations.code_for(association).should eql belongs_to_with_one_conditions_option
+          end
+        end
+      end
+
+      context "multiple options" do
+        it "should return the correct code" do
+          [ %w(Task belongs_to :user, :conditions => { status => "active", registered => true }),
+            %w(Task belongs_to :user, :conditions => { status: "active", registered: true}),
+          ].each do |association|
+            LearnRails::Associations.code_for(association).should eql belongs_to_with_multiple_conditions_options
+          end
+        end
+      end
+    end
   end
 
   context "has_one association" do
@@ -218,6 +242,56 @@ describe LearnRails::Associations do
       # def user(force_reload = false)
       #   @user = nil if force_reload
       #   @user ||= User.find_by_id(self.user_id)
+      # end
+      #
+      # def build_user(attributes = {})
+      #   self.user = User.new(attributes)
+      # end
+      #
+      # def create_user(attributes = {})
+      #   self.user = User.create(attributes)
+      # end
+      #
+      # def create_user!(attributes = {})
+      #   self.user = User.create!(attributes)
+      # end
+    code
+  end
+
+  def belongs_to_with_one_conditions_option
+    <<-code.gsub(/^\s+/, '')
+      # def user(force_reload = false)
+      #   @user = nil if force_reload
+      #   @user ||= User.first(:conditions => {:id => self.user_id, :status => "active")
+      # end
+      #
+      # def user=(user)
+      #   self.user_id = user.id
+      # end
+      #
+      # def build_user(attributes = {})
+      #   self.user = User.new(attributes)
+      # end
+      #
+      # def create_user(attributes = {})
+      #   self.user = User.create(attributes)
+      # end
+      #
+      # def create_user!(attributes = {})
+      #   self.user = User.create!(attributes)
+      # end
+    code
+  end
+
+  def belongs_to_with_multiple_conditions_options
+    <<-code.gsub(/^\s+/, '')
+      # def user(force_reload = false)
+      #   @user = nil if force_reload
+      #   @user ||= User.first(:conditions => {:id => self.user_id, :status => "active", :registered => "true")
+      # end
+      #
+      # def user=(user)
+      #   self.user_id = user.id
       # end
       #
       # def build_user(attributes = {})
