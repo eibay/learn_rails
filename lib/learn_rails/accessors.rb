@@ -1,45 +1,56 @@
 module LearnRails
   class Accessors
     def self.code_for(accessor)
-      attributes = attributes_from accessor
-
-      code = <<-code.gsub(/^\s+/, '')
+      @accessor = accessor
+      @code = <<-code.gsub(/^\s+/, '')
       code
 
       attributes.each do |attribute|
-        code << getter_method_for(attribute, code) if ['reader', 'accessor'].include? accessor_type(accessor)
-        code << setter_method_for(attribute, code) if ['writer', 'accessor'].include? accessor_type(accessor)
+        @code << getter_method_for(attribute) if getter_method_needed?
+        @code << setter_method_for(attribute) if setter_method_needed?
       end
 
-      code
+      @code
     end
 
     private
 
-    def self.accessor_type accessor
-      accessor[0].split('_')[1]
+    def self.attributes
+      @accessor.drop(1).map { |attr| attr.delete(',').delete(':') }.delete_if(&:empty?)
     end
 
-    def self.attributes_from accessor
-      accessor.drop(1).map { |attr| attr.delete(',').delete(':') }.delete_if(&:empty?)
+    def self.getter_method_needed?
+      ['reader', 'accessor'].include? accessor_type
     end
 
-    def self.getter_method_for attribute, code
+    def self.setter_method_needed?
+      ['writer', 'accessor'].include? accessor_type
+    end
+
+    def self.accessor_type
+      @accessor[0].split('_')[1]
+    end
+
+    def self.getter_method_for attribute
       <<-code.gsub(/^\s+/, '')
-        #{"#\n" unless code.empty?}
+        #{empty_comment_line_if_needed}
         # def #{attribute}
         #  @#{attribute}
         # end
       code
     end
 
-    def self.setter_method_for attribute, code
+    def self.setter_method_for attribute
       <<-code.gsub(/^\s+/, '')
-        #{"#\n" unless code.empty?}
+        #{empty_comment_line_if_needed}
         # def #{attribute}=(value)
         #  @#{attribute} = value
         # end
       code
+    end
+
+    def self.empty_comment_line_if_needed
+      @code.present? ? '#' : nil
     end
   end
 end
