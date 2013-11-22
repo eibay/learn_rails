@@ -39,7 +39,7 @@ module LearnRails
 
     def self.finder_method params, foreign_id, associate_model
       if params[:conditions]
-        "#{associate_model}.first(:conditions => {:id => self.#{foreign_id}, #{params[:conditions].to_condition_string})"
+        "#{associate_model}.first(:conditions => {:id => self.#{foreign_id}, #{params[:conditions].to_condition_string}})"
       else
         "#{associate_model}.find_by_id(self.#{foreign_id})"
       end

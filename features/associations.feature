@@ -197,7 +197,7 @@ Feature: Associations
     And  the output should contain "# def user(force_reload = false)"
     And  the output should contain:
       """
-      #   @user ||= User.first(:conditions => {:id => self.user_id, :status => "active")
+      #   @user ||= User.first(:conditions => {:id => self.user_id, :status => "active"})
       """
 
   Scenario: has_one association

@@ -262,7 +262,7 @@ describe LearnRails::Associations do
     <<-code.gsub(/^\s+/, '')
       # def user(force_reload = false)
       #   @user = nil if force_reload
-      #   @user ||= User.first(:conditions => {:id => self.user_id, :status => "active")
+      #   @user ||= User.first(:conditions => {:id => self.user_id, :status => "active"})
       # end
       #
       # def user=(user)
@@ -287,7 +287,7 @@ describe LearnRails::Associations do
     <<-code.gsub(/^\s+/, '')
       # def user(force_reload = false)
       #   @user = nil if force_reload
-      #   @user ||= User.first(:conditions => {:id => self.user_id, :status => "active", :registered => "true")
+      #   @user ||= User.first(:conditions => {:id => self.user_id, :status => "active", :registered => "true"})
       # end
       #
       # def user=(user)
