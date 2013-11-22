@@ -1,8 +1,8 @@
 # Learn Rails
 [![Build Status](https://secure.travis-ci.org/pjc/learn_rails.png?branch=master)][travis]
-[![Code Climate](https://codeclimate.com/github/pjc/learn_rails.png)][codeclimate]
 [![Dependency Status](https://gemnasium.com/pjc/learn_rails.png)][gemnasium]
-<!-- [![Coverage Status](https://coveralls.io/repos/pjc/learn_rails/badge.png?branch=master)][coveralls] -->
+[![Code Climate](https://codeclimate.com/github/pjc/learn_rails.png)][codeclimate]
+[![Coverage Status](https://coveralls.io/repos/pjc/learn_rails/badge.png?branch=master)][coveralls]
 
 [travis]: https://travis-ci.org/pjc/learn_rails
 [codeclimate]: https://codeclimate.com/github/pjc/learn_rails
