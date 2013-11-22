@@ -8,8 +8,9 @@ module LearnRails
     private
 
     def self.params association
-      association = clean_up association
+      clean_up association
       detect_conditions_option association
+
       params = {}
       params[:model]        = association.shift.downcase
       params[:association]  = association.shift
