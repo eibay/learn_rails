@@ -1,4 +1,4 @@
-require 'learn_rails'
+require 'spec_helper'
 
 describe LearnRails::Associations do
   context "belongs_to association" do

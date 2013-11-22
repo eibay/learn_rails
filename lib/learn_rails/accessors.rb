@@ -20,11 +20,11 @@ module LearnRails
     end
 
     def self.getter_method_needed?
-      ['reader', 'accessor'].include? accessor_type
+      @getter ||= ['reader', 'accessor'].include? accessor_type
     end
 
     def self.setter_method_needed?
-      ['writer', 'accessor'].include? accessor_type
+      @setter ||= ['writer', 'accessor'].include? accessor_type
     end
 
     def self.accessor_type
