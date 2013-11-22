@@ -1,6 +1,13 @@
-require 'learn_rails'
+require 'spec_helper'
 
+@accessors
 describe LearnRails::Accessors do
+
+  after(@accessors) do
+    LearnRails::Accessors.instance_variable_set(:@getter, nil)
+    LearnRails::Accessors.instance_variable_set(:@setter, nil)
+  end
+
   context "attr" do
     context "readers" do
       it "attr_reader :name" do
