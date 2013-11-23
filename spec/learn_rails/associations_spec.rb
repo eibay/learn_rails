@@ -2,51 +2,61 @@ require 'spec_helper'
 
 describe LearnRails::Associations do
   context "belongs_to association" do
-    it "without options" do
-      [ %w(Task belongs_to :user),
-        %w(Task belongs_to "user")
-        ].each do |association|
-        LearnRails::Associations.code_for(association).should eql belongs_to_code
+    context "without options" do
+      it "should return the correct code" do
+        [ %w(Task belongs_to :user),
+          %w(Task belongs_to "user")
+          ].each do |association|
+          LearnRails::Associations.code_for(association).should eql belongs_to_code
+        end
       end
     end
 
-    it "with class_name option" do
-      [ %w(Task belongs_to :user, :class_name => :person),
-        %w(Task belongs_to :user, :class_name => "person"),
-        %w(Task belongs_to :user, class_name: :person),
-        %w(Task belongs_to :user, class_name: "person")
-        ].each do |association|
-        LearnRails::Associations.code_for(association).should eql belongs_to_with_class_name_code
+    context "with class_name option" do
+      it "should return the correct code" do
+        [ %w(Task belongs_to :user, :class_name => :person),
+          %w(Task belongs_to :user, :class_name => "person"),
+          %w(Task belongs_to :user, class_name: :person),
+          %w(Task belongs_to :user, class_name: "person")
+          ].each do |association|
+          LearnRails::Associations.code_for(association).should eql belongs_to_with_class_name_code
+        end
       end
     end
 
-    it "with foreign_key option" do
-      [ %w(Task belongs_to :user, :foreign_key => :person_id),
-        %w(Task belongs_to :user, :foreign_key => "person_id"),
-        %w(Task belongs_to :user, foreign_key: :person_id),
-        %w(Task belongs_to :user, foreign_key: "person_id")
-        ].each do |association|
-        LearnRails::Associations.code_for(association).should eql belongs_to_with_foreign_key_code
+    context "with foreign_key option" do
+      it "should return the correct code" do
+        [ %w(Task belongs_to :user, :foreign_key => :person_id),
+          %w(Task belongs_to :user, :foreign_key => "person_id"),
+          %w(Task belongs_to :user, foreign_key: :person_id),
+          %w(Task belongs_to :user, foreign_key: "person_id")
+          ].each do |association|
+          LearnRails::Associations.code_for(association).should eql belongs_to_with_foreign_key_code
+        end
       end
     end
 
-    it "with primary_key option" do
-      [ %w(Task belongs_to :user, :primary_key => :todo_id),
-        %w(Task belongs_to :user, :primary_key => "todo_id"),
-        %w(Task belongs_to :user, primary_key: :todo_id),
-        %w(Task belongs_to :user, primary_key: "todo_id")
-        ].each do |association|
-        LearnRails::Associations.code_for(association).should eql belongs_to_with_primary_key_code
+    context "with primary_key option" do
+      it "should return the correct code" do
+        [ %w(Task belongs_to :user, :primary_key => :todo_id),
+          %w(Task belongs_to :user, :primary_key => "todo_id"),
+          %w(Task belongs_to :user, primary_key: :todo_id),
+          %w(Task belongs_to :user, primary_key: "todo_id")
+          ].each do |association|
+          LearnRails::Associations.code_for(association).should eql belongs_to_with_primary_key_code
+        end
       end
     end
 
-    it "with readonly option" do
-      [ %w(Task belongs_to :user, :readonly => true),
-        %w(Task belongs_to :user, :readonly => "true"),
-        %w(Task belongs_to :user, readonly: true),
-        %w(Task belongs_to :user, readonly: "true")
-        ].each do |association|
-        LearnRails::Associations.code_for(association).should eql belongs_to_with_readonly_code
+    context "with readonly option" do
+      it "should return the correct code" do
+        [ %w(Task belongs_to :user, :readonly => true),
+          %w(Task belongs_to :user, :readonly => "true"),
+          %w(Task belongs_to :user, readonly: true),
+          %w(Task belongs_to :user, readonly: "true")
+          ].each do |association|
+          LearnRails::Associations.code_for(association).should eql belongs_to_with_readonly_code
+        end
       end
     end
 
@@ -76,61 +86,73 @@ describe LearnRails::Associations do
   end
 
   context "has_one association" do
-    it "without options" do
-      [ %w(User has_one :task),
-        %w(User has_one "task")
-        ].each do |association|
-        LearnRails::Associations.code_for(association).should eql has_one_code
+    context "without options" do
+      it "should return the correct code" do
+        [ %w(User has_one :task),
+          %w(User has_one "task")
+          ].each do |association|
+          LearnRails::Associations.code_for(association).should eql has_one_code
+        end
       end
     end
 
-    it "with class_name option" do
-      [ %w(User has_one :task, :class_name => :to_do),
-        %w(User has_one :task, :class_name => "ToDo"),
-        %w(User has_one :task, class_name: :to_do),
-        %w(User has_one :task, class_name: "ToDo")
-        ].each do |association|
-        LearnRails::Associations.code_for(association).should eql has_one_with_class_name_code
+    context "with class_name option" do
+      it "should return the correct code" do
+        [ %w(User has_one :task, :class_name => :to_do),
+          %w(User has_one :task, :class_name => "ToDo"),
+          %w(User has_one :task, class_name: :to_do),
+          %w(User has_one :task, class_name: "ToDo")
+          ].each do |association|
+          LearnRails::Associations.code_for(association).should eql has_one_with_class_name_code
+        end
       end
     end
 
-    it "with foreign_key option" do
-      [ %w(User has_one :task, :foreign_key => :employee_id),
-        %w(User has_one :task, :foreign_key => "employee_id"),
-        %w(User has_one :task, foreign_key: :employee_id),
-        %w(User has_one :task, foreign_key: "employee_id")
-        ].each do |association|
-        LearnRails::Associations.code_for(association).should eql has_one_with_foreign_key_code
+    context "with foreign_key option" do
+      it "should return the correct code" do
+        [ %w(User has_one :task, :foreign_key => :employee_id),
+          %w(User has_one :task, :foreign_key => "employee_id"),
+          %w(User has_one :task, foreign_key: :employee_id),
+          %w(User has_one :task, foreign_key: "employee_id")
+          ].each do |association|
+          LearnRails::Associations.code_for(association).should eql has_one_with_foreign_key_code
+        end
       end
     end
 
-    it "with primary_key option" do
-      [ %w(User has_one :task, :primary_key => :primary_id),
-        %w(User has_one :task, :primary_key => "primary_id"),
-        %w(User has_one :task, primary_key: :primary_id),
-        %w(User has_one :task, primary_key: "primary_id")
-        ].each do |association|
-        LearnRails::Associations.code_for(association).should eql has_one_with_primary_key_code
+    context "with primary_key option" do
+      it "should return the correct code" do
+        [ %w(User has_one :task, :primary_key => :primary_id),
+          %w(User has_one :task, :primary_key => "primary_id"),
+          %w(User has_one :task, primary_key: :primary_id),
+          %w(User has_one :task, primary_key: "primary_id")
+          ].each do |association|
+          LearnRails::Associations.code_for(association).should eql has_one_with_primary_key_code
+        end
       end
     end
 
-    it "with readonly option" do
-      [ %w(User has_one :task, :readonly => true),
-        %w(User has_one :task, :readonly => "true"),
-        %w(User has_one :task, readonly: true),
-        %w(User has_one :task, readonly: "true")
-        ].each do |association|
-        LearnRails::Associations.code_for(association).should eql has_one_with_readonly_code
+    context "with readonly option" do
+      it "should return the correct code" do
+        [ %w(User has_one :task, :readonly => true),
+          %w(User has_one :task, :readonly => "true"),
+          %w(User has_one :task, readonly: true),
+          %w(User has_one :task, readonly: "true")
+          ].each do |association|
+          LearnRails::Associations.code_for(association).should eql has_one_with_readonly_code
+        end
       end
     end
   end
 
   context "has_many association" do
-    it "without options" do
-      [ %w(User has_many :tasks),
-        %w(User has_many "tasks")
-        ].each do |association|
-        LearnRails::Associations.code_for(association).should eql has_many_code
+    context "without options" do
+      it "should return the correct code" do
+        [ %w(User has_many :tasks),
+          %w(User has_many "tasks")
+          ].each do |association|
+          LearnRails::Associations.code_for(association).should eql has_many_code
+        end
       end
     end
   end
