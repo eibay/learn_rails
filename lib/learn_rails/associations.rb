@@ -9,7 +9,7 @@ module LearnRails
 
     def self.params association
       clean_up association
-      detect_conditions_option association
+      hashify_conditions_options association
 
       params = {}
       params[:model]        = association.shift.downcase
@@ -26,32 +26,19 @@ module LearnRails
       association.map! { |e| e.delete(':').delete(',').delete('\"') }
     end
 
-    def self.detect_conditions_option association
+    def self.hashify_conditions_options association
       return association unless association.include? "conditions"
-      index = association.index "conditions"
+
+      start_options_index = association.index("conditions") + 1
+      end_options_index   = association[start_options_index..-1].find_index { |e| e.match /}/ } + start_options_index
+
       conditions = []
-      start = false
-      association[index..-1].each do |opt|
-        if opt.include?('{')
-          start = true
-          association.delete(opt)
-          conditions << opt.delete('{') if opt.length > 1
-          next
-        end
-
-        if opt.include?('}')
-          start = false
-          association.delete(opt)
-          conditions << opt.delete('}') if opt.length > 1
-          next
-        end
-
-        if start
-          association.delete(opt)
-          conditions << opt
-        end
+      association[start_options_index..end_options_index].each do |option|
+        conditions << option.delete('{').delete('}') if option.length > 1
+        association.delete(option)
       end
-      association.insert(index+1, Hash[*conditions.flatten])
+
+      association.insert(start_options_index, Hash[*conditions])
     end
   end
 end
