@@ -67,6 +67,10 @@ describe LearnRails::Associations do
             %w(Task belongs_to :user, :conditions => {status: "active"}),
             %w(Task belongs_to :user, :conditions => { status: "active"}),
             %w(Task belongs_to :user, :conditions => {status: "active" }),
+            %w(Task belongs_to :user, conditions: { :status => "active" }),
+            %w(Task belongs_to :user, conditions: {status: "active"}),
+            %w(Task belongs_to :user, conditions: { status: "active"}),
+            %w(Task belongs_to :user, conditions: {status: "active" })
           ].each do |association|
             LearnRails::Associations.code_for(association).should eql belongs_to_with_one_conditions_option
           end
@@ -77,6 +81,8 @@ describe LearnRails::Associations do
         it "should return the correct code" do
           [ %w(Task belongs_to :user, :conditions => { status => "active", registered => true }),
             %w(Task belongs_to :user, :conditions => { status: "active", registered: true}),
+            %w(Task belongs_to :user, conditions: { status => "active", registered => true }),
+            %w(Task belongs_to :user, conditions: { status: "active", registered: true})
           ].each do |association|
             LearnRails::Associations.code_for(association).should eql belongs_to_with_multiple_conditions_options
           end
