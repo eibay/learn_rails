@@ -72,7 +72,7 @@ describe LearnRails::Associations do
             %w(Task belongs_to :user, conditions: { status: "active"}),
             %w(Task belongs_to :user, conditions: {status: "active" })
           ].each do |association|
-            LearnRails::Associations.code_for(association).should eql belongs_to_with_one_conditions_option
+            LearnRails::Associations.code_for(association).should eql belongs_to_with_one_condition_code
           end
         end
       end
@@ -84,7 +84,7 @@ describe LearnRails::Associations do
             %w(Task belongs_to :user, conditions: { status => "active", registered => true }),
             %w(Task belongs_to :user, conditions: { status: "active", registered: true})
           ].each do |association|
-            LearnRails::Associations.code_for(association).should eql belongs_to_with_multiple_conditions_options
+            LearnRails::Associations.code_for(association).should eql belongs_to_with_multiple_conditions_code
           end
         end
       end
@@ -149,6 +149,37 @@ describe LearnRails::Associations do
         end
       end
     end
+
+    context "with conditions options" do
+      context "one option" do
+        it "should return the correct code" do
+          [ %w(User has_one :task, :conditions => { :status => "active" }),
+            %w(User has_one :task, :conditions => {status: "active"}),
+            %w(User has_one :task, :conditions => { status: "active"}),
+            %w(User has_one :task, :conditions => {status: "active" }),
+            %w(User has_one :task, conditions: { :status => "active" }),
+            %w(User has_one :task, conditions: {status: "active"}),
+            %w(User has_one :task, conditions: { status: "active"}),
+            %w(User has_one :task, conditions: {status: "active" })
+          ].each do |association|
+            LearnRails::Associations.code_for(association).should eql has_one_with_one_condition_code
+          end
+        end
+      end
+
+      context "multiple options" do
+        it "should return the correct code" do
+          [ %w(User has_one :task, :conditions => { status => "active", registered => true }),
+            %w(User has_one :task, :conditions => { status: "active", registered: true}),
+            %w(User has_one :task, conditions: { status => "active", registered => true }),
+            %w(User has_one :task, conditions: { status: "active", registered: true})
+          ].each do |association|
+            LearnRails::Associations.code_for(association).should eql has_one_with_multiple_conditions_code
+          end
+        end
+      end
+    end
+
   end
 
   context "has_many association" do
@@ -286,7 +317,7 @@ describe LearnRails::Associations do
     code
   end
 
-  def belongs_to_with_one_conditions_option
+  def belongs_to_with_one_condition_code
     <<-code.gsub(/^\s+/, '')
       # def user(force_reload = false)
       #   @user = nil if force_reload
@@ -311,7 +342,7 @@ describe LearnRails::Associations do
     code
   end
 
-  def belongs_to_with_multiple_conditions_options
+  def belongs_to_with_multiple_conditions_code
     <<-code.gsub(/^\s+/, '')
       # def user(force_reload = false)
       #   @user = nil if force_reload
@@ -457,6 +488,64 @@ describe LearnRails::Associations do
       # def task(force_reload = false)
       #   @task = nil if force_reload
       #   @task ||= Task.find_by_user_id(self.id)
+      # end
+      #
+      # def build_task(attributes = {})
+      #   attributes[:user_id] = self.id
+      #   Task.new(attributes)
+      # end
+      #
+      # def create_task(attributes = {})
+      #   attributes[:user_id] = self.id
+      #   Task.create(attributes)
+      # end
+      #
+      # def create_task!(attributes = {})
+      #   attributes[:user_id] = self.id
+      #   Task.create!(attributes)
+      # end
+    code
+  end
+
+  def has_one_with_one_condition_code
+    <<-code.gsub(/^\s+/, '')
+      # def task(force_reload = false)
+      #   @task = nil if force_reload
+      #   @task ||= Task.first(:conditions => {:user_id => self.id, :status => "active"})
+      # end
+      #
+      # def task=(task)
+      #   task.user_id = self.id
+      #   task.save
+      # end
+      #
+      # def build_task(attributes = {})
+      #   attributes[:user_id] = self.id
+      #   Task.new(attributes)
+      # end
+      #
+      # def create_task(attributes = {})
+      #   attributes[:user_id] = self.id
+      #   Task.create(attributes)
+      # end
+      #
+      # def create_task!(attributes = {})
+      #   attributes[:user_id] = self.id
+      #   Task.create!(attributes)
+      # end
+    code
+  end
+
+  def has_one_with_multiple_conditions_code
+    <<-code.gsub(/^\s+/, '')
+      # def task(force_reload = false)
+      #   @task = nil if force_reload
+      #   @task ||= Task.first(:conditions => {:user_id => self.id, :status => "active", :registered => "true"})
+      # end
+      #
+      # def task=(task)
+      #   task.user_id = self.id
+      #   task.save
       # end
       #
       # def build_task(attributes = {})
