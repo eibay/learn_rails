@@ -106,6 +106,8 @@ Happy learning!
 
 2. Don't forget to prepend your associations with the ruby model they are defined in (see example above).
 
+Don't worry too much about rule 2 though: If you forget to give the model name when we need it, we'll ask for it. And when you give it when we don't need it, we'll ignore it.
+
 ## List of available commands
 
 Accessors:
