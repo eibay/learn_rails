@@ -15,7 +15,7 @@ Currently works for:
 - accessors (`attr_reader`, `attr_writer`, `attr_accessor`)
 - associations (`belongs_to` and `has_one` only so far)
 
-Also note that for associations, the only options that work so far are `class_name`, `readonly`, `primary_key` and `foreign_key`.
+Also note that for associations, the only options that work so far are `class_name`, `readonly`, `primary_key`, `foreign_key` and `conditions`.
 
 Coming soon:
 - All rails magic / helpers
