@@ -126,10 +126,6 @@ Associations:
 
 Options for each association: `class_name: "Whatever"`, `foreign_key: "foreign_id"`, `primary_id: "primary_id"`, `readonly: true`
 
-## Changelog
-
-This gem has yet to be published at Rubygems. Coming soon!
-
 ## Feedback
 
 Comments and feedback are very welcome on [our github issues page](https://github.com/pjc/learn_rails/issues?state=open).
