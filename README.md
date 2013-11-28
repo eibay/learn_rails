@@ -124,7 +124,7 @@ Associations:
 
     $ learn rails mymodelname has_one :associate
 
-Options for each association: `class_name: "Whatever"`, `foreign_key: "foreign_id"`, `primary_id: "primary_id"`, `readonly: true`
+Options for each association: `class_name: "Whatever"`, `foreign_key: "foreign_id"`, `primary_id: "primary_id"`, `readonly: true`, `conditions: { anykey: 'anyvalue' }`
 
 ## Feedback
 
